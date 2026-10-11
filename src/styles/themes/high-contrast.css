@@ -1,0 +1,27 @@
+[data-theme="contrast"] {
+  color-scheme: dark;
+  --color-background: #000;
+  --color-surface: #000;
+  --color-surface-elevated: #000;
+  --color-text-primary: #fff;
+  --color-text-secondary: #fff;
+  --color-text-muted: #fff;
+  --color-primary: #ffef00;
+  --color-primary-hover: #fff;
+  --color-on-primary: #000;
+  --color-signal: #fff;
+  --color-border: #fff;
+  --color-focus: #00ffff;
+  --color-grid: #000;
+  --color-shadow: #000;
+  --color-visual: #000;
+  --opacity-grid: 0;
+  --border-width: 2px;
+}
+[data-theme="contrast"] a {
+  text-decoration: underline;
+  text-underline-offset: var(--space-xs);
+}
+[data-theme="contrast"] .hero-diagram svg {
+  animation: none;
+}

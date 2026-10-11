@@ -1,0 +1,19 @@
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --color-background: #faf9fd;
+  --color-surface: #fff;
+  --color-surface-elevated: #f0f2fc;
+  --color-text-primary: #151c2e;
+  --color-text-secondary: #42495b;
+  --color-text-muted: #5c6375;
+  --color-primary: #154acb;
+  --color-primary-hover: #103aa2;
+  --color-on-primary: #fff;
+  --color-signal: #006b77;
+  --color-border: #d6d9e6;
+  --color-focus: #154acb;
+  --color-grid: #d8dfef;
+  --color-shadow: #bac4db;
+  --color-visual: #edf0fc;
+}

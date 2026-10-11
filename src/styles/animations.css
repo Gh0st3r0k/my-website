@@ -1,0 +1,49 @@
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes orbit {
+  to {
+    stroke-dashoffset: -120;
+  }
+}
+.page-transition {
+  animation: page-enter var(--duration-slow) var(--ease-standard);
+}
+[data-reveal] {
+  transition:
+    opacity var(--duration-slow) var(--ease-standard),
+    transform var(--duration-slow) var(--ease-standard);
+}
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+}
+.diagram-orbit {
+  stroke-dasharray: 8 12;
+  animation: orbit var(--duration-decorative) linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-pending {
+    opacity: 1;
+    transform: none;
+  }
+  .project-card:hover,
+  .button:hover,
+  .project-card:hover svg {
+    transform: none;
+  }
+}
