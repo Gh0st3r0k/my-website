@@ -1,4 +1,8 @@
 :root {
+  --settings-width: 28rem;
+  --settings-max-height: 85dvh;
+  --settings-icon-size: 1.25rem;
+  --opacity-overlay: 0.65;
   /* Responsive boundaries are declared in globals.css; CSS custom properties
      cannot be used in native media-query conditions. */
   --portrait-width: 20rem;

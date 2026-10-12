@@ -144,5 +144,8 @@
   "lastUpdated": "Posledná aktualizácia",
   "networkPairDesc": "Moje aplikácie na štúdium správania switchov a routerov, vytvorené v C#, ASP.NET Core a Electron.",
   "personalPhotos": "Osobne",
-  "viewPhoto": "Zobraziť celú fotografiu"
+  "viewPhoto": "Zobraziť celú fotografiu",
+  "settings": "Nastavenia",
+  "settingsDescription": "Jazyk a vzhľad",
+  "closeSettings": "Zavrieť nastavenia"
 }

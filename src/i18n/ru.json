@@ -144,5 +144,8 @@
   "lastUpdated": "Обновлено",
   "networkPairDesc": "Мои приложения для изучения работы switch и router на C#, ASP.NET Core и Electron.",
   "personalPhotos": "Лично обо мне",
-  "viewPhoto": "Открыть фото целиком"
+  "viewPhoto": "Открыть фото целиком",
+  "settings": "Настройки",
+  "settingsDescription": "Язык и оформление",
+  "closeSettings": "Закрыть настройки"
 }

@@ -144,5 +144,8 @@
   "lastUpdated": "Last updated",
   "networkPairDesc": "My applications for studying switch and router behaviour, built with C#, ASP.NET Core and Electron.",
   "personalPhotos": "In person",
-  "viewPhoto": "View full photo"
+  "viewPhoto": "View full photo",
+  "settings": "Settings",
+  "settingsDescription": "Language & appearance",
+  "closeSettings": "Close settings"
 }

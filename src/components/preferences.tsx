@@ -5,6 +5,8 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
+  useState,
+  useId,
 } from "react";
 import { basePath, locales, type Locale } from "@/config/site";
 import type { Dictionary } from "@/i18n";
@@ -20,6 +22,32 @@ const subscribe = (callback: () => void) => {
   return () => window.removeEventListener("appearance", callback);
 };
 const snapshot = () => document.documentElement.dataset.preference || "system";
+function changeLocale(value: string, path: string, locale: Locale) {
+  if (value === locale) return;
+  try {
+    localStorage.setItem("locale", value);
+  } catch {}
+  document.cookie = `locale=${value};path=/;max-age=31536000;SameSite=Lax`;
+  // Reload the locale document to restore its root theme before paint.
+  // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- Locale root initialization requires a document navigation.
+  window.location.assign(
+    `${basePath}/${value}${path.replace(/^\/(en|sk|ru|uk)/, "")}${window.location.search}${window.location.hash}`,
+  );
+}
+function changeTheme(value: string) {
+  try {
+    localStorage.setItem("appearance", value);
+  } catch {}
+  document.documentElement.dataset.preference = value;
+  document.documentElement.dataset.theme =
+    value === "system"
+      ? matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
+      : value;
+  window.dispatchEvent(new Event("appearance"));
+}
+
 export function Preferences({ locale, t }: { locale: Locale; t: Dictionary }) {
   const hydrated = useSyncExternalStore(
     subscribeReady,
@@ -28,63 +56,101 @@ export function Preferences({ locale, t }: { locale: Locale; t: Dictionary }) {
   );
   const path = usePathname();
   const theme = useSyncExternalStore(subscribe, snapshot, () => "system");
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [open, setOpen] = useState(false);
+  const id = useId();
   return (
     <div className="preferences">
-      <label>
-        <span className="sr-only">{t.language}</span>
-        <select
-          disabled={!hydrated}
-          aria-label={t.language}
-          value={locale}
-          onChange={(event) => {
-            const value = event.target.value;
-            try {
-              localStorage.setItem("locale", value);
-            } catch {}
-            document.cookie = `locale=${value};path=/;max-age=31536000;SameSite=Lax`;
-            // A locale changes the document root. Load its HTML so the saved
-            // appearance is applied by the head script before the first paint.
-            // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- A new locale document must initialize its root theme before paint.
-            window.location.assign(
-              `${basePath}/${value}${path.replace(/^\/(en|sk|ru|uk)/, "")}${window.location.search}${window.location.hash}`,
-            );
-          }}
+      <button
+        className="settings-trigger"
+        disabled={!hydrated}
+        aria-haspopup="dialog"
+        aria-controls={id}
+        aria-expanded={open}
+        onClick={() => {
+          dialog.current?.showModal();
+          setOpen(true);
+        }}
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
         >
-          {locales.map((value) => (
-            <option key={value} value={value}>
-              {names[value]}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        <span className="sr-only">{t.appearance}</span>
-        <select
-          disabled={!hydrated}
-          aria-label={t.appearance}
-          value={theme}
-          onChange={(event) => {
-            const value = event.target.value;
-            try {
-              localStorage.setItem("appearance", value);
-            } catch {}
-            document.documentElement.dataset.preference = value;
-            document.documentElement.dataset.theme =
-              value === "system"
-                ? matchMedia("(prefers-color-scheme: dark)").matches
-                  ? "dark"
-                  : "light"
-                : value;
-            window.dispatchEvent(new Event("appearance"));
-          }}
-        >
-          {(["system", "light", "dark", "contrast"] as const).map((value) => (
-            <option key={value} value={value}>
-              {t[value]}
-            </option>
-          ))}
-        </select>
-      </label>
+          <path d="M4 7h16M4 17h16" />
+          <circle cx="9" cy="7" r="3" />
+          <circle cx="15" cy="17" r="3" />
+        </svg>
+        <span>{t.settings}</span>
+      </button>
+      <dialog
+        ref={dialog}
+        id={id}
+        className="settings-dialog"
+        aria-labelledby={`${id}-title`}
+        onClose={() => setOpen(false)}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            if (
+              event.clientX < rect.left ||
+              event.clientX > rect.right ||
+              event.clientY < rect.top ||
+              event.clientY > rect.bottom
+            )
+              dialog.current?.close();
+          }
+        }}
+      >
+        <div className="settings-heading">
+          <div>
+            <span className="eyebrow">{t.settingsDescription}</span>
+            <h2 id={`${id}-title`}>{t.settings}</h2>
+          </div>
+          <button
+            className="settings-close"
+            aria-label={t.closeSettings}
+            onClick={() => dialog.current?.close()}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <fieldset className="settings-group">
+          <legend>{t.language}</legend>
+          <div className="settings-options">
+            {locales.map((value) => (
+              <label className="settings-option" key={value}>
+                <input
+                  type="radio"
+                  name={`${id}-locale`}
+                  value={value}
+                  checked={locale === value}
+                  onChange={() => changeLocale(value, path, locale)}
+                />
+                <span lang={value}>{names[value]}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset className="settings-group">
+          <legend>{t.appearance}</legend>
+          <div className="settings-options">
+            {(["system", "light", "dark", "contrast"] as const).map((value) => (
+              <label className="settings-option" key={value}>
+                <input
+                  type="radio"
+                  name={`${id}-appearance`}
+                  value={value}
+                  checked={theme === value}
+                  onChange={() => changeTheme(value)}
+                />
+                <span>{t[value]}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </dialog>
     </div>
   );
 }

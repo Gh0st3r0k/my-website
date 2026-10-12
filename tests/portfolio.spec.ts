@@ -1,6 +1,27 @@
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const target = (path: string) => `${basePath}${path}`;
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+async function openSettings(page: Page) {
+  if (!(await page.locator(".settings-dialog").isVisible()))
+    await page.locator(".settings-trigger").click();
+}
+async function chooseTheme(page: Page, theme: string) {
+  await openSettings(page);
+  await page
+    .locator(`.settings-group`)
+    .last()
+    .locator(`input[value="${theme}"]`)
+    .check();
+  await page.keyboard.press("Escape");
+}
+async function chooseLocale(page: Page, locale: string) {
+  await openSettings(page);
+  await page
+    .locator(".settings-group")
+    .first()
+    .locator(`input[value="${locale}"]`)
+    .check();
+}
 const locales = ["en", "sk", "ru", "uk"];
 const paths = [
   "",
@@ -52,7 +73,7 @@ test("browser and saved locale redirects; switching preserves project route", as
   await page.goto(target("/"));
   await expect(page).toHaveURL(/\/sk\/$/);
   await page.goto(target("/sk/projects/trinitypeer"));
-  await page.getByRole("combobox", { name: "Jazyk" }).selectOption("uk");
+  await chooseLocale(page, "uk");
   await expect(page).toHaveURL(/\/uk\/projects\/trinitypeer\/$/);
   await page.goto(target("/"));
   await expect(page).toHaveURL(/\/uk\/$/);
@@ -64,16 +85,12 @@ test("themes persist without flash and system follows OS", async ({ page }) => {
   await page.goto(target("/en"));
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   for (const theme of ["light", "dark", "contrast"]) {
-    await page
-      .getByRole("combobox", { name: "Appearance" })
-      .selectOption(theme);
+    await chooseTheme(page, theme);
     await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
   }
-  await page
-    .getByRole("combobox", { name: "Appearance" })
-    .selectOption("system");
+  await chooseTheme(page, "system");
   await page.emulateMedia({ colorScheme: "light" });
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.emulateMedia({ colorScheme: "dark" });
@@ -168,7 +185,7 @@ test("WCAG AA automated checks in all themes and representative layouts", async 
     ]) {
       await page.goto(target(path));
       for (const theme of ["light", "dark", "contrast"]) {
-        await page.locator(".preferences select").last().selectOption(theme);
+        await chooseTheme(page, theme);
         const results = await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
           .analyze();
@@ -182,7 +199,7 @@ test("returning to visited pages starts at the top, including browser history", 
   page,
 }) => {
   await page.goto(target("/en/"));
-  await page.getByRole("combobox", { name: "Appearance" }).selectOption("dark");
+  await chooseTheme(page, "dark");
   await page.locator(".site-footer").scrollIntoViewIfNeeded();
   await page
     .locator(".contact-cta")
@@ -272,9 +289,9 @@ test("language switches preserve every appearance choice and the original name",
   await page.emulateMedia({ colorScheme: "dark" });
   for (const theme of ["light", "dark", "contrast", "system"]) {
     await page.goto(target("/en/projects/trinitypeer/"));
-    await page.locator(".preferences select").last().selectOption(theme);
+    await chooseTheme(page, theme);
     for (const locale of ["sk", "ru", "uk", "en"]) {
-      await page.locator(".preferences select").first().selectOption(locale);
+      await chooseLocale(page, locale);
       await expect(page).toHaveURL(
         new RegExp(`/${locale}/projects/trinitypeer/$`),
       );
@@ -282,12 +299,63 @@ test("language switches preserve every appearance choice and the original name",
         "data-theme",
         theme === "system" ? "dark" : theme,
       );
-      await expect(page.locator(".preferences select").last()).toHaveValue(
-        theme,
-      );
+      await openSettings(page);
+      await expect(
+        page
+          .locator(".settings-group")
+          .last()
+          .locator(`input[value="${theme}"]`),
+      ).toBeChecked();
+      await page.keyboard.press("Escape");
     }
   }
   await page.goto(target("/en/"));
   await expect(page.locator("h1")).toHaveText("KostiantynZaitsev");
   await expect(page.locator("h1 .title-dot")).toHaveCount(0);
+});
+
+test("settings dialog works with keyboard, retains focus and fits small screens", async ({
+  page,
+}) => {
+  const { default: AxeBuilder } = await import("@axe-core/playwright");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const width of [320, 390, 1440]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto(target("/en/"));
+    const trigger = page.getByRole("button", { name: "Settings", exact: true });
+    await expect(trigger).toBeEnabled();
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+    await expect(
+      page.getByRole("dialog", { name: "Settings", exact: true }),
+    ).toBeVisible();
+    expect(
+      await page.locator(".settings-dialog").evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        return (
+          r.left >= 0 &&
+          r.right <= innerWidth &&
+          r.top >= 0 &&
+          r.bottom <= innerHeight
+        );
+      }),
+    ).toBe(true);
+    for (const theme of ["light", "dark", "contrast"]) {
+      await page
+        .locator(".settings-group")
+        .last()
+        .locator(`input[value="${theme}"]`)
+        .check();
+      expect(
+        (
+          await new AxeBuilder({ page })
+            .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+            .analyze()
+        ).violations,
+      ).toEqual([]);
+    }
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).not.toBeVisible();
+    await expect(trigger).toBeFocused();
+  }
 });
