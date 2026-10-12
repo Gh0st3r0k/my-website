@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { pages, site, type Locale, type Page } from "@/config/site";
+import Image from "next/image";
+import { primaryPhoto } from "@/content/photos";
+import { pages, site, assetPath, type Locale, type Page } from "@/config/site";
 import type { Dictionary } from "@/i18n";
 import { Preferences } from "./preferences";
 const navigation: Page[] = ["home", ...pages.filter((page) => page !== "cv")];
@@ -29,9 +31,20 @@ export function Header({
       <header className="site-header">
         <div className="header-inner">
           <Link className="brand" href={`/${locale}`}>
-            <span className="monogram" aria-hidden="true">
-              KZ<span>↗</span>
-            </span>
+            {primaryPhoto ? (
+              <Image
+                className="brand-avatar"
+                src={assetPath(primaryPhoto.src)}
+                alt=""
+                width={primaryPhoto.width}
+                height={primaryPhoto.height}
+                sizes="44px"
+              />
+            ) : (
+              <span className="monogram" aria-hidden="true">
+                KZ<span>↗</span>
+              </span>
+            )}
             <span>
               {site.name}
               <small>{t.software}</small>

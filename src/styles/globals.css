@@ -1025,3 +1025,22 @@ figcaption {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.brand-avatar {
+  width: var(--control-height);
+  height: var(--control-height);
+  object-fit: cover;
+  object-position: center;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-circle);
+  flex-shrink: 0;
+}
+.hero-portrait {
+  margin: var(--space-lg);
+}
+.hero-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}

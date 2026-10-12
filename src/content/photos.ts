@@ -13,4 +13,19 @@ export type PersonalPhoto = {
 /** First photo is the main portrait. Remaining photos form a static grid.
  * Add only photos intended for public display. An empty list hides the gallery.
  */
-export const personalPhotos: PersonalPhoto[] = [];
+export const personalPhotos: PersonalPhoto[] = [
+  {
+    src: "/images/personal/k-zaitsev.png",
+    width: 1122,
+    height: 1402,
+    alt: {
+      en: "Portrait of Kostiantyn Zaitsev",
+      sk: "Portrét Kostiantyna Zaitseva",
+      ru: "Портрет Kostiantyn Zaitsev",
+      uk: "Портрет Kostiantyn Zaitsev",
+    },
+  },
+];
+
+/** One source of truth for the hero portrait and header avatar. */
+export const primaryPhoto = personalPhotos[0];

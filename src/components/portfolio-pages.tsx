@@ -14,6 +14,7 @@ import {
   type Project,
 } from "@/content/portfolio";
 import { ProjectCard, ProjectVisual } from "./project";
+import { primaryPhoto } from "@/content/photos";
 import { PersonalGallery } from "./personal-gallery";
 import { PrintButton } from "./preferences";
 export function Section({
@@ -258,22 +259,35 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
             <span>{t.overview}</span>
             <span aria-hidden="true">↗</span>
           </div>
-          <div className="hero-diagram" aria-hidden="true">
-            <svg viewBox="0 0 360 260" fill="none">
-              <path d="M60 130 180 60 300 130 180 200 60 130ZM180 60V200M60 130H300M120 95V165M240 95V165" />
-              <path
-                className="diagram-orbit"
-                d="M60 130 180 60 300 130 180 200 60 130"
+          {primaryPhoto ? (
+            <div className="hero-portrait">
+              <Image
+                src={assetPath(primaryPhoto.src)}
+                alt={primaryPhoto.alt[locale]}
+                width={primaryPhoto.width}
+                height={primaryPhoto.height}
+                sizes="(max-width: 640px) 100vw, 40vw"
+                preload
               />
-              <circle cx="180" cy="130" r="35" />
-              <circle cx="180" cy="130" r="24" />
-              <circle cx="60" cy="130" r="6" />
-              <circle cx="300" cy="130" r="6" />
-              <circle cx="180" cy="60" r="6" />
-              <circle cx="180" cy="200" r="6" />
-            </svg>
-            <span className="diagram-initials">KZ</span>
-          </div>
+            </div>
+          ) : (
+            <div className="hero-diagram" aria-hidden="true">
+              <svg viewBox="0 0 360 260" fill="none">
+                <path d="M60 130 180 60 300 130 180 200 60 130ZM180 60V200M60 130H300M120 95V165M240 95V165" />
+                <path
+                  className="diagram-orbit"
+                  d="M60 130 180 60 300 130 180 200 60 130"
+                />
+                <circle cx="180" cy="130" r="35" />
+                <circle cx="180" cy="130" r="24" />
+                <circle cx="60" cy="130" r="6" />
+                <circle cx="300" cy="130" r="6" />
+                <circle cx="180" cy="60" r="6" />
+                <circle cx="180" cy="200" r="6" />
+              </svg>
+              <span className="diagram-initials">KZ</span>
+            </div>
+          )}
           <div className="dossier-row">
             <span className="eyebrow">{t.university}</span>
             <strong>{site.university}</strong>
