@@ -1036,7 +1036,9 @@ figcaption {
   flex-shrink: 0;
 }
 .hero-portrait {
-  margin: var(--space-lg);
+  width: calc(100% - var(--space-lg) * 2);
+  max-width: var(--hero-portrait-width);
+  margin: var(--space-lg) auto;
 }
 .hero-portrait img {
   display: block;
