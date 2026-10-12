@@ -10,6 +10,14 @@
   --color-primary: #154acb;
   --color-accent: var(--color-primary);
   --color-diagram: var(--color-primary);
+  --color-network-top: color-mix(
+    in srgb,
+    var(--color-diagram) 85%,
+    var(--color-on-primary)
+  );
+  --color-network-left: var(--color-primary-hover);
+  --color-network-side: var(--color-primary);
+  --color-network-arrow: var(--color-on-primary);
   --color-primary-hover: #103aa2;
   --color-on-primary: #fff;
   --color-signal: #006b77;

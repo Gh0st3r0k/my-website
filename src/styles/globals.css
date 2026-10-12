@@ -1159,3 +1159,17 @@ figcaption {
 .education-card h3 a {
   color: var(--color-text-primary);
 }
+
+.network-symbol .network-top {
+  fill: var(--color-network-top);
+}
+.network-symbol .network-left {
+  fill: var(--color-network-left);
+}
+.network-symbol .network-side {
+  fill: var(--color-network-side);
+}
+.network-symbol .network-arrows {
+  fill: var(--color-network-arrow);
+  stroke: none;
+}

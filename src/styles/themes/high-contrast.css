@@ -1,5 +1,9 @@
 [data-theme="contrast"] {
   color-scheme: dark;
+  --color-network-top: var(--color-surface);
+  --color-network-left: var(--color-surface);
+  --color-network-side: var(--color-surface);
+  --color-network-arrow: var(--color-text-primary);
   --color-background: #000;
   --color-surface: #000;
   --color-surface-elevated: #000;

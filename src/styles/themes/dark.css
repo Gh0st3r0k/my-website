@@ -24,5 +24,6 @@
   --color-grid: #30215a;
   --color-shadow: #050014;
   --color-visual: #190f43;
+  --color-network-top: var(--color-diagram);
   --color-diagram: var(--palette-tertiary);
 }

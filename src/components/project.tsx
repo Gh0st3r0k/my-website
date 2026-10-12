@@ -1,8 +1,15 @@
 import Link from "next/link";
+import { NetworkSymbol } from "./network-symbol";
 import type { Locale } from "@/config/site";
 import type { Dictionary } from "@/i18n";
 import type { Project } from "@/content/portfolio";
-export function ProjectVisual({ kind }: { kind: Project["visual"] }) {
+export function ProjectVisual({
+  kind,
+  companion,
+}: {
+  kind: Project["visual"];
+  companion?: Project["visual"];
+}) {
   return (
     <div className={`project-visual ${kind}`} aria-hidden="true">
       <svg viewBox="0 0 420 220" fill="none">
@@ -36,15 +43,17 @@ export function ProjectVisual({ kind }: { kind: Project["visual"] }) {
               />
             ))}
           </>
-        ) : (
+        ) : companion === "switch" || companion === "router" ? (
           <>
-            <path d="M95 60H325V160H95ZM130 85H155V110H130ZM175 85H200V110H175ZM220 85H245V110H220ZM265 85H290V110H265ZM210 160V195M95 110H45M325 110H375" />
-            <circle className="node-active" cx="140" cy="138" r="3" />
-            <circle className="node-active" cx="160" cy="138" r="3" />
-            {kind === "router" && (
-              <path d="m70 50 20-20 20 20M90 30V60M310 185l20 20 20-20M330 205V160" />
-            )}
+            <g transform="translate(-5 40) scale(.62)">
+              <NetworkSymbol kind={kind} />
+            </g>
+            <g transform="translate(165 40) scale(.62)">
+              <NetworkSymbol kind={companion} />
+            </g>
           </>
+        ) : (
+          <NetworkSymbol kind={kind} />
         )}
       </svg>
       <span className="visual-cross cross-one">+</span>
@@ -82,7 +91,7 @@ export function ProjectCard({
         aria-hidden="true"
         href={`/${locale}/projects/${project.slug}`}
       >
-        <ProjectVisual kind={project.visual} />
+        <ProjectVisual kind={project.visual} companion={related?.visual} />
       </Link>
       <div className="card-body">
         <h3>
