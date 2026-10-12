@@ -1,6 +1,7 @@
 :root {
   /* Responsive boundaries are declared in globals.css; CSS custom properties
      cannot be used in native media-query conditions. */
+  --portrait-width: 32rem;
   --container-header: 90rem;
   --width-selector: 10rem;
   --width-selector-mobile: 8rem;

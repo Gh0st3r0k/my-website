@@ -142,5 +142,7 @@
   "nowLearning": "I am studying computer networking, information systems and software architecture, university topics and CISY. I am also learning the technologies used in our current team project.",
   "nowGoals": "My goals are to continue my Master's studies, develop practical skills and find a job in IT.",
   "lastUpdated": "Last updated",
-  "networkPairDesc": "My applications for studying switch and router behaviour, built with C#, ASP.NET Core and Electron."
+  "networkPairDesc": "My applications for studying switch and router behaviour, built with C#, ASP.NET Core and Electron.",
+  "personalPhotos": "In person",
+  "viewPhoto": "View full photo"
 }

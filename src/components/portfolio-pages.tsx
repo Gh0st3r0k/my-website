@@ -14,6 +14,7 @@ import {
   type Project,
 } from "@/content/portfolio";
 import { ProjectCard, ProjectVisual } from "./project";
+import { PersonalGallery } from "./personal-gallery";
 import { PrintButton } from "./preferences";
 export function Section({
   title,
@@ -404,19 +405,22 @@ export function PortfolioPage({
         ).padStart(2, "0")}
       />
       {page === "about" && (
-        <div className="editorial-list">
-          {about.map((item, index) => (
-            <section key={item.title} data-reveal>
-              <span className="mono">
-                {new Intl.NumberFormat(locale, {
-                  minimumIntegerDigits: 2,
-                }).format(index + 1)}
-              </span>
-              <h2>{t[item.title]}</h2>
-              <p>{t[item.body]}</p>
-            </section>
-          ))}
-        </div>
+        <>
+          <PersonalGallery locale={locale} t={t} />
+          <div className="editorial-list">
+            {about.map((item, index) => (
+              <section key={item.title} data-reveal>
+                <span className="mono">
+                  {new Intl.NumberFormat(locale, {
+                    minimumIntegerDigits: 2,
+                  }).format(index + 1)}
+                </span>
+                <h2>{t[item.title]}</h2>
+                <p>{t[item.body]}</p>
+              </section>
+            ))}
+          </div>
+        </>
       )}
       {page === "projects" && (
         <div className="project-grid collection">

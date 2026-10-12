@@ -75,3 +75,31 @@ About, experience, education, skills, project details and Now are populated from
 Automatons Simulator covers finite automata; pushdown automata and Turing machines are described as experimental directions. The Router feature list was checked against its public server source (routing, packet forwarding, ARP, DHCP and RIPv2); this is source inspection, not a functional validation of that application.
 
 Unfilled case-study sections, uncertain roles/statuses and deferred links are omitted. Screenshots, further confirmed project details and any future publicly approved team case studies can be added later. Internal infrastructure, addresses, credentials, user data and nonpublic partner/project details are not published. The original supplied PDF remains unchanged.
+
+## Images and personal photos
+
+All public images live under `public/images/`:
+
+- `general/`: ordinary site images and illustrations.
+- `projects/<project-slug>/`: project screenshots, registered in the corresponding project record.
+- `personal/`: your portraits and other personal photos intended for visitors.
+
+For example, put a portrait at `public/images/personal/portrait.webp`. Register it in `src/content/photos.ts` with its public path `/images/personal/portrait.webp`, actual pixel width/height and alt text in en/sk/ru/uk. Captions are optional. Array order determines display order: the first photo is the main portrait, followed by a static, responsive grid on About. Photos retain their full aspect ratio and open at full size on click. No carousel or automatic rotation is used. Empty lists render no section or placeholders.
+
+WebP/JPEG are suitable for photos; use readable filenames and compressed images. There is no need to change React components when adding photos: only files and the content list. Files in `public/` are public after deployment. Do not use `personal/` as private storage. The `/my-website` deployment prefix is added automatically.
+
+Example record (only add it after the file exists; replace dimensions and descriptions with the actual photo):
+
+```ts
+{
+  src: '/images/personal/portrait.webp',
+  width: 1200,
+  height: 1600,
+  alt: {
+    en: 'Portrait of Kostiantyn Zaitsev',
+    sk: 'Portrét Kostiantyna Zaitseva',
+    ru: 'Портрет Kostiantyn Zaitsev',
+    uk: 'Портрет Kostiantyn Zaitsev',
+  },
+}
+```

@@ -142,5 +142,7 @@
   "nowLearning": "Študujem počítačové siete, architektúru informačných systémov a softvéru, univerzitné témy a CISY. Učím sa aj technológie používané v aktuálnom tímovom projekte.",
   "nowGoals": "Mojimi cieľmi sú pokračovať v magisterskom štúdiu, rozvíjať praktické zručnosti a nájsť si prácu v IT.",
   "lastUpdated": "Posledná aktualizácia",
-  "networkPairDesc": "Moje aplikácie na štúdium správania switchov a routerov, vytvorené v C#, ASP.NET Core a Electron."
+  "networkPairDesc": "Moje aplikácie na štúdium správania switchov a routerov, vytvorené v C#, ASP.NET Core a Electron.",
+  "personalPhotos": "Osobne",
+  "viewPhoto": "Zobraziť celú fotografiu"
 }

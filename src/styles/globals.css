@@ -984,3 +984,44 @@ figcaption {
     color: inherit;
   }
 }
+
+.personal-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--space-lg);
+}
+.personal-photo {
+  margin: 0;
+  min-width: 0;
+}
+.personal-photo:first-child {
+  grid-column: span 2;
+}
+.personal-photo:first-child:nth-last-child(1) {
+  max-width: var(--portrait-width);
+}
+.personal-photo a {
+  display: block;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+.personal-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 850px) {
+  .personal-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .personal-photo:first-child {
+    grid-column: auto;
+  }
+}
+@media (max-width: 640px) {
+  .personal-photo-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
