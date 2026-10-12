@@ -27,5 +27,5 @@ export const personalPhotos: PersonalPhoto[] = [
   },
 ];
 
-/** One source of truth for the hero portrait and header avatar. */
+/** Main real portrait for the hero and personal gallery. Header artwork is configured separately in site.ts. */
 export const primaryPhoto = personalPhotos[0];

@@ -109,3 +109,5 @@ Example record (only add it after the file exists; replace dimensions and descri
 Each locale includes `/education/bachelor/`, `/education/master/`, `/experience/ynet/` and `/experience/pafuplex/`. Overview cards link to these pages, which include back navigation and use the same education/experience records as the overview and CV. Edit `slug`, description and section keys in `src/content/portfolio.ts`, and copy in the four dictionaries. `src/components/background-detail.tsx` renders both kinds of detail page.
 
 Only supplied information is used. General academic interests are not assigned to a specific degree unless confirmed. Missing course names, grades, credits, detailed curricula and internal work information are omitted. Further confirmed learning topics can be added as sections without rewriting page components.
+
+The illustrated header avatar is configured separately as `site.headerAvatar` in `src/config/site.ts` and stored under `public/images/general/`. It does not replace the real portrait or add fictional artwork to the personal photo gallery.

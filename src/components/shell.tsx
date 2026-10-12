@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { primaryPhoto } from "@/content/photos";
 import { pages, site, assetPath, type Locale, type Page } from "@/config/site";
 import type { Dictionary } from "@/i18n";
 import { Preferences } from "./preferences";
@@ -31,13 +30,13 @@ export function Header({
       <header className="site-header">
         <div className="header-inner">
           <Link className="brand" href={`/${locale}`}>
-            {primaryPhoto ? (
+            {site.headerAvatar ? (
               <Image
                 className="brand-avatar"
-                src={assetPath(primaryPhoto.src)}
+                src={assetPath(site.headerAvatar.src)}
                 alt=""
-                width={primaryPhoto.width}
-                height={primaryPhoto.height}
+                width={site.headerAvatar.width}
+                height={site.headerAvatar.height}
                 sizes="44px"
               />
             ) : (

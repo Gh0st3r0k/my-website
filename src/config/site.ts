@@ -19,6 +19,11 @@ export const siteUrl = (path: string) =>
 export const site = {
   name: "Kostiantyn Zaitsev",
   university: "FIIT STU",
+  headerAvatar: {
+    src: "/images/general/gh0st3r0k-avatar.webp",
+    width: 256,
+    height: 256,
+  },
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   email: "zaitsev.kostiantyn2004@gmail.com" as string | null,
   github: "https://github.com/Gh0st3r0k" as string | null,
