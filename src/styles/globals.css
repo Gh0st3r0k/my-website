@@ -22,7 +22,7 @@ body {
     color var(--duration-normal);
 }
 a {
-  color: var(--color-primary);
+  color: var(--color-accent);
   text-decoration: none;
 }
 a:hover {
@@ -116,7 +116,7 @@ main {
   text-transform: uppercase;
   letter-spacing: var(--tracking-meta);
   font-size: var(--text-xs);
-  color: var(--color-primary);
+  color: var(--color-accent);
   margin-bottom: var(--space-md);
 }
 .sr-only {
@@ -203,7 +203,7 @@ main {
   padding-block: var(--space-sm);
 }
 .desktop-nav a[aria-current="page"] {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 .desktop-nav a::after {
   content: "";
@@ -263,10 +263,10 @@ main {
   margin-bottom: var(--space-lg);
 }
 .hero h1 > span {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 .title-dot {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 .position {
   font-family: var(--font-heading);
@@ -363,7 +363,7 @@ main {
   margin: var(--space-lg);
 }
 .hero-diagram svg {
-  stroke: var(--color-primary);
+  stroke: var(--color-diagram);
   stroke-width: var(--diagram-stroke);
   background: var(--color-visual);
 }
@@ -377,7 +377,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-primary);
+  color: var(--color-accent);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
 }
@@ -466,7 +466,7 @@ main {
   display: flex;
   justify-content: space-between;
   padding: var(--space-lg);
-  color: var(--color-primary);
+  color: var(--color-accent);
   font-size: var(--text-xs);
 }
 .project-visual {
@@ -482,12 +482,12 @@ main {
   background-size: var(--grid-size) var(--grid-size);
 }
 .project-visual svg {
-  stroke: var(--color-primary);
+  stroke: var(--color-diagram);
   stroke-width: var(--diagram-stroke);
   transition: transform var(--duration-slow);
 }
 .project-visual text {
-  fill: var(--color-primary);
+  fill: var(--color-accent);
   stroke: none;
   font: var(--text-base) var(--font-mono);
 }
@@ -661,7 +661,7 @@ main {
   border-bottom: var(--border-width) solid var(--color-border);
 }
 .editorial-list section > span {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 .editorial-list p {
   margin: 0;
@@ -675,7 +675,7 @@ main {
   margin-bottom: var(--space-lg);
 }
 .education-icon {
-  color: var(--color-primary);
+  color: var(--color-accent);
   font-size: var(--text-h2);
 }
 .education-card a {
@@ -841,7 +841,7 @@ figcaption {
     align-items: center;
     min-height: var(--control-height);
     list-style: none;
-    color: var(--color-primary);
+    color: var(--color-accent);
     font-size: var(--text-sm);
   }
   .mobile-nav summary::-webkit-details-marker {
@@ -858,7 +858,7 @@ figcaption {
     color: var(--color-text-secondary);
   }
   .mobile-nav a[aria-current="page"] {
-    color: var(--color-primary);
+    color: var(--color-accent);
     background: var(--color-surface-elevated);
   }
   .hero {

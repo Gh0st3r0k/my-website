@@ -8,6 +8,8 @@
   --color-text-secondary: #42495b;
   --color-text-muted: #5c6375;
   --color-primary: #154acb;
+  --color-accent: var(--color-primary);
+  --color-diagram: var(--color-primary);
   --color-primary-hover: #103aa2;
   --color-on-primary: #fff;
   --color-signal: #006b77;

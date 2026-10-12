@@ -1,18 +1,28 @@
 [data-theme="dark"] {
   color-scheme: dark;
-  --color-background: #0d0622;
-  --color-surface: #17102e;
-  --color-surface-elevated: #231842;
-  --color-text-primary: #f2edff;
-  --color-text-secondary: #c7bfdc;
-  --color-text-muted: #a69bbe;
-  --color-primary: #b19aff;
-  --color-primary-hover: #d0c0ff;
-  --color-on-primary: #160a35;
-  --color-signal: #65e7ed;
-  --color-border: #3e3257;
-  --color-focus: #65e7ed;
-  --color-grid: #3c2b5e;
-  --color-shadow: #000;
-  --color-visual: #20143d;
+
+  /* Source palette. All dark-theme colors and derived tones live here. */
+  --palette-primary: #3500d3;
+  --palette-secondary: #00f0ff;
+  --palette-tertiary: #6366f1;
+  --palette-neutral: #0c0032;
+
+  --color-background: var(--palette-neutral);
+  --color-surface: #160d3b;
+  --color-surface-elevated: #241b4c;
+  --color-text-primary: #f5f1ff;
+  --color-text-secondary: #d0c7e7;
+  --color-text-muted: #afa2cc;
+  --color-primary: var(--palette-primary);
+  --color-primary-hover: #4f17f7;
+  --color-on-primary: #ffffff;
+  /* A lighter primary tone keeps links readable on midnight surfaces. */
+  --color-accent: #c5c0ff;
+  --color-signal: var(--palette-secondary);
+  --color-border: #4a3d68;
+  --color-focus: var(--palette-secondary);
+  --color-grid: #30215a;
+  --color-shadow: #050014;
+  --color-visual: #190f43;
+  --color-diagram: var(--palette-tertiary);
 }
