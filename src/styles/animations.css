@@ -1,11 +1,9 @@
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(var(--reveal-distance));
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 @keyframes orbit {
@@ -14,12 +12,24 @@
   }
 }
 .page-transition {
-  animation: page-enter var(--duration-slow) var(--ease-standard);
+  animation: page-enter var(--duration-slow) var(--ease-standard)
+    var(--delay-page) backwards;
 }
-[data-reveal] {
+[data-reveal],
+.project-card[data-reveal] {
   transition:
     opacity var(--duration-slow) var(--ease-standard),
-    transform var(--duration-slow) var(--ease-standard);
+    transform var(--duration-slow) var(--ease-standard),
+    border-color var(--duration-normal) var(--ease-standard),
+    box-shadow var(--duration-normal) var(--ease-standard);
+  transition-delay: var(--delay-reveal);
+}
+.project-grid > [data-reveal]:nth-child(2),
+.timeline > [data-reveal]:nth-child(2) {
+  transition-delay: calc(var(--delay-reveal) + var(--delay-stagger));
+}
+.project-grid > [data-reveal]:nth-child(3) {
+  transition-delay: calc(var(--delay-reveal) + var(--delay-stagger) * 2);
 }
 .reveal-pending {
   opacity: 0;

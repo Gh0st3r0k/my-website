@@ -1,12 +1,12 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   useSyncExternalStore,
   useEffect,
   useLayoutEffect,
   useRef,
 } from "react";
-import { locales, type Locale } from "@/config/site";
+import { basePath, locales, type Locale } from "@/config/site";
 import type { Dictionary } from "@/i18n";
 const names = {
   en: "English",
@@ -27,7 +27,6 @@ export function Preferences({ locale, t }: { locale: Locale; t: Dictionary }) {
     () => false,
   );
   const path = usePathname();
-  const router = useRouter();
   const theme = useSyncExternalStore(subscribe, snapshot, () => "system");
   return (
     <div className="preferences">
@@ -43,7 +42,12 @@ export function Preferences({ locale, t }: { locale: Locale; t: Dictionary }) {
               localStorage.setItem("locale", value);
             } catch {}
             document.cookie = `locale=${value};path=/;max-age=31536000;SameSite=Lax`;
-            router.push(`/${value}${path.replace(/^\/(en|sk|ru|uk)/, "")}`);
+            // A locale changes the document root. Load its HTML so the saved
+            // appearance is applied by the head script before the first paint.
+            // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- A new locale document must initialize its root theme before paint.
+            window.location.assign(
+              `${basePath}/${value}${path.replace(/^\/(en|sk|ru|uk)/, "")}${window.location.search}${window.location.hash}`,
+            );
           }}
         >
           {locales.map((value) => (

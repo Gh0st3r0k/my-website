@@ -265,9 +265,6 @@ main {
 .hero h1 > span {
   color: var(--color-accent);
 }
-.title-dot {
-  color: var(--color-accent);
-}
 .position {
   font-family: var(--font-heading);
   font-size: var(--text-lg);

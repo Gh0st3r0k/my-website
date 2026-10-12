@@ -265,3 +265,29 @@ test("published content has confirmed details and hides unfilled sections", asyn
     page.getByRole("heading", { name: "Links", exact: true }),
   ).toHaveCount(0);
 });
+
+test("language switches preserve every appearance choice and the original name", async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  for (const theme of ["light", "dark", "contrast", "system"]) {
+    await page.goto(target("/en/projects/trinitypeer/"));
+    await page.locator(".preferences select").last().selectOption(theme);
+    for (const locale of ["sk", "ru", "uk", "en"]) {
+      await page.locator(".preferences select").first().selectOption(locale);
+      await expect(page).toHaveURL(
+        new RegExp(`/${locale}/projects/trinitypeer/$`),
+      );
+      await expect(page.locator("html")).toHaveAttribute(
+        "data-theme",
+        theme === "system" ? "dark" : theme,
+      );
+      await expect(page.locator(".preferences select").last()).toHaveValue(
+        theme,
+      );
+    }
+  }
+  await page.goto(target("/en/"));
+  await expect(page.locator("h1")).toHaveText("KostiantynZaitsev");
+  await expect(page.locator("h1 .title-dot")).toHaveCount(0);
+});

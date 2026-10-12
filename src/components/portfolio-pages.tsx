@@ -224,9 +224,7 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
           <h1>
             Kostiantyn
             <br />
-            <span>
-              Zaitsev<span className="title-dot">.</span>
-            </span>
+            <span>Zaitsev</span>
           </h1>
           <p className="position">{t.position}</p>
           <p className="hero-intro">{t.intro}</p>
@@ -364,10 +362,7 @@ export function PageIntro({
       <span className="eyebrow">
         [{index}] / {site.name}
       </span>
-      <h1>
-        {title}
-        <span className="title-dot">.</span>
-      </h1>
+      <h1>{title}</h1>
       <p>{description}</p>
     </header>
   );

@@ -12,7 +12,7 @@ Expected project URL: **https://gh0st3r0k.github.io/my-website/**. This is the c
 
 `.github/workflows/pages.yml` obtains the origin and path from `actions/configure-pages`: it supports project paths, user sites and configured custom domains without hardcoding a deploy prefix. Only static output is uploaded; no Node.js server is needed on Pages. Deep routes export as `index.html` in directories, so refreshes work. Next links and scripts receive `basePath`; PDF, image paths, canonical URLs, sitemap and hreflang use the same prefix.
 
-The root chooses saved locale cookie → browser languages → English using a small pre-render script, because Pages has no server-side middleware. Without JavaScript it shows four language links. Locale URLs always determine language. System appearance follows OS preference; other choices persist locally.
+The root chooses saved locale cookie → browser languages → English using a small pre-render script, because Pages has no server-side middleware. Without JavaScript it shows four language links. Locale URLs always determine language. The language selector loads the target locale document so its head script restores the saved appearance before paint; ordinary navigation within a locale remains client-side. System appearance follows OS preference; other choices persist locally.
 
 ## Local development
 
