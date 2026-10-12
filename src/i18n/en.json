@@ -147,5 +147,20 @@
   "viewPhoto": "View full photo",
   "settings": "Settings",
   "settingsDescription": "Language & appearance",
-  "closeSettings": "Close settings"
+  "closeSettings": "Close settings",
+  "bachelorOverview": "I studied Informatics at FIIT STU from 2022 to 2026. I completed the programme and defended my bachelor's thesis: a web simulator of formal automata in Elm.",
+  "bachelorFoundation": "During my bachelor's studies, I worked with programming languages, web development and computer networks. I completed individual academic applications and gained experience with team projects.",
+  "masterOverview": "Since 2026 I have been studying for a Master's degree in Informatics at FIIT STU. Expected completion is 2028. My current work includes information systems architecture, software architecture and a team project.",
+  "masterTopics": "I am studying information systems architecture and software architecture as part of my current Master's courses. Alongside these topics, I work on a university team project and its website, and a Dynamic Authorization Architecture project.",
+  "ynetResponsibilities": "I help users, diagnose network problems and take part in infrastructure work. My tasks involve hardware and software troubleshooting, network devices, cabling and user tickets.",
+  "ynetLearning": "Through support and NetYops/networking tasks, I gain practical experience with real infrastructure. I continue learning about computer networks and internal support systems.",
+  "pafuResponsibilities": "I worked on backend functionality, the data access layer, database communication and backend logic. I contributed to the recommendation system as part of the development team. NestJS was the confirmed backend framework I used.",
+  "studiedTopics": "What I studied",
+  "roleResponsibilities": "My responsibilities",
+  "educationDetail": "Explore my studies",
+  "experienceDetail": "Explore this experience",
+  "backEducation": "Back to education",
+  "backExperience": "Back to experience",
+  "studyPeriod": "Study period",
+  "workPeriod": "Work period"
 }

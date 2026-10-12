@@ -1136,3 +1136,26 @@ figcaption {
   height: auto;
   border-radius: var(--radius-sm);
 }
+
+.background-facts {
+  padding: var(--space-xl);
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-surface);
+}
+.background-facts dl {
+  margin: 0;
+}
+.background-facts dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-md);
+}
+.background-facts dd {
+  margin: var(--space-xs) 0 0;
+  color: var(--color-text-primary);
+}
+.timeline-item h3 a,
+.education-card h3 a {
+  color: var(--color-text-primary);
+}

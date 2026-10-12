@@ -36,6 +36,10 @@ const paths = [
   "projects/trinitypeer",
   "projects/switch",
   "projects/router",
+  "education/bachelor",
+  "education/master",
+  "experience/ynet",
+  "experience/pafuplex",
 ];
 for (const locale of locales) {
   test(`${locale}: every page, language and SEO`, async ({ page }) => {
@@ -109,6 +113,10 @@ test("responsive layouts have no overflow on every page and locale", async ({
         "about",
         "contact",
         "projects/automata-simulator",
+        "education/bachelor",
+        "education/master",
+        "experience/ynet",
+        "experience/pafuplex",
       ]) {
         await page.goto(target(`/${locale}/${path}`));
         expect(
@@ -158,14 +166,20 @@ test("keyboard skip link, mobile menu, reduced motion and original CV", async ({
     page.getByRole("button", { name: "Print / save as PDF" }),
   ).toBeVisible();
 });
-test("unknown routes return 404; sitemap contains all 48 routes", async ({
+test("unknown routes return 404; sitemap contains all 64 routes", async ({
   request,
 }) => {
-  for (const path of ["/en/no-such-page", "/en/projects/missing", "/de/about"])
+  for (const path of [
+    "/en/no-such-page",
+    "/en/projects/missing",
+    "/de/about",
+    "/en/education/missing",
+    "/en/experience/missing",
+  ])
     expect((await request.get(target(path))).status()).toBe(404);
   const sitemap = await request.get(target("/sitemap.xml"));
   expect(sitemap.status()).toBe(200);
-  expect((await sitemap.text()).match(/<url>/g)?.length).toBe(48);
+  expect((await sitemap.text()).match(/<url>/g)?.length).toBe(64);
   expect((await request.get(target("/robots.txt"))).status()).toBe(200);
 });
 
@@ -357,5 +371,80 @@ test("settings dialog works with keyboard, retains focus and fits small screens"
     await page.keyboard.press("Escape");
     await expect(page.getByRole("dialog")).not.toBeVisible();
     await expect(trigger).toBeFocused();
+  }
+});
+
+test("education and experience cards lead to confirmed detail content", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(target("/en/education/"));
+  await page
+    .getByRole("link", {
+      name: "Bachelor’s Degree in Informatics",
+      exact: true,
+    })
+    .click();
+  await expect(page).toHaveURL(/\/en\/education\/bachelor\/$/);
+  await expect(page.locator("h1")).toHaveText(
+    "Bachelor’s Degree in Informatics",
+  );
+  await expect(page.locator("main")).toContainText("Model–View–Update");
+  await expect(
+    page.getByRole("heading", { name: "What I studied" }),
+  ).toBeVisible();
+  await page
+    .getByRole("link", { name: "Back to education", exact: false })
+    .click();
+  await page
+    .getByRole("link", { name: "Master’s Degree in Informatics", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/en\/education\/master\/$/);
+  await expect(page.locator("main")).toContainText("2028");
+  await expect(page.locator("main")).toContainText("software architecture");
+  for (const [slug, role, text] of [
+    ["ynet", "IT Support & Infrastructure Assistant", "keystones"],
+    ["pafuplex", "Back-End Developer", "NestJS"],
+  ]) {
+    await page.goto(target("/en/experience/"));
+    await page.getByRole("link", { name: role, exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`/en/experience/${slug}/$`));
+    await expect(page.locator("main")).toContainText(text);
+    await expect(
+      page.getByRole("heading", { name: "My responsibilities" }),
+    ).toBeVisible();
+    await expect(
+      page.locator('.desktop-nav a[aria-current="page"]'),
+    ).toHaveText("Experience");
+    await page
+      .getByRole("link", { name: "Back to experience", exact: false })
+      .click();
+    await expect(page).toHaveURL(/\/en\/experience\/$/);
+  }
+});
+
+test("new study and work details are accessible on phone and desktop", async ({
+  page,
+}) => {
+  const { default: AxeBuilder } = await import("@axe-core/playwright");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of [
+      "/en/education/bachelor/",
+      "/sk/education/master/",
+      "/ru/experience/ynet/",
+      "/uk/experience/pafuplex/",
+    ]) {
+      await page.goto(target(path));
+      await chooseTheme(page, "dark");
+      expect(
+        (
+          await new AxeBuilder({ page })
+            .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+            .analyze()
+        ).violations,
+      ).toEqual([]);
+    }
   }
 });

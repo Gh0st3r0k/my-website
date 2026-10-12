@@ -1,12 +1,8 @@
 import type { MetadataRoute } from "next";
-import { locales, pages, siteUrl } from "@/config/site";
-import { projects } from "@/content/portfolio";
+import { locales, siteUrl } from "@/config/site";
+import { portfolioPaths } from "@/content/routes";
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    " ",
-    ...pages,
-    ...projects.map((project) => `projects/${project.slug}`),
-  ].flatMap((page) => {
+  return portfolioPaths.flatMap((page) => {
     const suffix = page.trim() ? `/${page}` : "";
     return locales.map((locale) => ({
       url: siteUrl(`/${locale}${suffix}/`),

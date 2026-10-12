@@ -9,7 +9,9 @@ import {
   type Page,
 } from "@/config/site";
 import { messages } from "@/i18n";
-import { projects } from "@/content/portfolio";
+import { BackgroundDetail } from "@/components/background-detail";
+import { portfolioPaths } from "@/content/routes";
+import { projects, education, experience } from "@/content/portfolio";
 import { Header, Footer } from "@/components/shell";
 import { PortfolioPage, ProjectDetail } from "@/components/portfolio-pages";
 import { MotionRoot } from "@/components/preferences";
@@ -17,6 +19,34 @@ type Props = { params: Promise<{ locale: string; path?: string[] }> };
 function resolve(locale: string, path: string[] = []) {
   if (!isLocale(locale)) return null;
   const t = messages(locale);
+  if (path.length === 2 && path[0] === "education") {
+    const item = education.find((item) => item.slug === path[1]);
+    return item
+      ? {
+          locale,
+          t,
+          page: "education" as const,
+          project: undefined,
+          background: { kind: "education" as const, item },
+          title: t[item.degree],
+          description: t[item.description],
+        }
+      : null;
+  }
+  if (path.length === 2 && path[0] === "experience") {
+    const item = experience.find((item) => item.slug === path[1]);
+    return item
+      ? {
+          locale,
+          t,
+          page: "experience" as const,
+          project: undefined,
+          background: { kind: "experience" as const, item },
+          title: `${item.company} · ${t[item.role]}`,
+          description: t[item.description],
+        }
+      : null;
+  }
   if (path.length === 2 && path[0] === "projects") {
     const project = projects.find((project) => project.slug === path[1]);
     return project
@@ -25,6 +55,7 @@ function resolve(locale: string, path: string[] = []) {
           t,
           page: "projects" as Page,
           project,
+          background: undefined,
           title: project.name,
           description: t[project.description],
         }
@@ -51,20 +82,19 @@ function resolve(locale: string, path: string[] = []) {
     t,
     page,
     project: undefined,
+    background: undefined,
     title: t[page],
     description: descriptions[page],
   };
 }
 export const dynamicParams = false;
 export function generateStaticParams() {
-  return locales.flatMap((locale) => [
-    { locale, path: [] },
-    ...pages.map((page) => ({ locale, path: [page] })),
-    ...projects.map((project) => ({
+  return locales.flatMap((locale) =>
+    portfolioPaths.map((path) => ({
       locale,
-      path: ["projects", project.slug],
+      path: path ? path.split("/") : [],
     })),
-  ]);
+  );
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, path = [] } = await params;
@@ -106,7 +136,13 @@ export default async function Page({ params }: Props) {
       <Header locale={route.locale} t={route.t} active={route.page} />
       <main id="main" tabIndex={-1} className="container">
         <MotionRoot>
-          {route.project ? (
+          {route.background ? (
+            <BackgroundDetail
+              {...route.background}
+              locale={route.locale}
+              t={route.t}
+            />
+          ) : route.project ? (
             <ProjectDetail
               project={route.project}
               locale={route.locale}

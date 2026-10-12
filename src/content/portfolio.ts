@@ -88,18 +88,25 @@ export const projects: Project[] = [
     featured: false,
   },
 ];
+export type BackgroundSection = { title: MessageKey; body: MessageKey };
 export const experience: {
+  slug: string;
+  sections: BackgroundSection[];
   company: string;
   role: MessageKey;
   description: MessageKey;
   start: string;
   end: string | null;
   technologies: string[];
-  examples?: MessageKey;
 }[] = [
   {
+    slug: "ynet",
+    sections: [
+      { title: "roleResponsibilities", body: "ynetResponsibilities" },
+      { title: "workExamples", body: "ynetExamples" },
+      { title: "learning", body: "ynetLearning" },
+    ],
     company: "Ynet",
-    examples: "ynetExamples",
     role: "ynetRole",
     description: "ynetDesc",
     start: "2025-09-01",
@@ -107,8 +114,12 @@ export const experience: {
     technologies: [],
   },
   {
+    slug: "pafuplex",
+    sections: [
+      { title: "roleResponsibilities", body: "pafuResponsibilities" },
+      { title: "workExamples", body: "pafuExamples" },
+    ],
     company: "PafuPlex",
-    examples: "pafuExamples",
     role: "pafuRole",
     description: "pafuDesc",
     start: "2025-01-01",
@@ -117,6 +128,9 @@ export const experience: {
   },
 ];
 export const education: {
+  slug: string;
+  description: MessageKey;
+  sections: BackgroundSection[];
   degree: MessageKey;
   start: number;
   end: number | null;
@@ -124,8 +138,26 @@ export const education: {
   expectedEnd?: number;
   thesisTitle?: string;
 }[] = [
-  { degree: "master", start: 2026, end: null, expectedEnd: 2028 },
   {
+    slug: "master",
+    description: "masterOverview",
+    sections: [
+      { title: "studiedTopics", body: "masterTopics" },
+      { title: "goals", body: "nowGoals" },
+    ],
+    degree: "master",
+    start: 2026,
+    end: null,
+    expectedEnd: 2028,
+  },
+  {
+    slug: "bachelor",
+    description: "bachelorOverview",
+    sections: [
+      { title: "studiedTopics", body: "bachelorFoundation" },
+      { title: "thesis", body: "automataArchitecture" },
+      { title: "learned", body: "automataLearned" },
+    ],
     degree: "bachelor",
     start: 2022,
     end: 2026,

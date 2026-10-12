@@ -71,14 +71,18 @@ export function Timeline({
           </div>
           <div>
             <span className="eyebrow">{item.company}</span>
-            <h3>{t[item.role]}</h3>
+            <h3>
+              <Link href={`/${locale}/experience/${item.slug}`}>
+                {t[item.role]}
+              </Link>
+            </h3>
             <p>{t[item.description]}</p>
-            {!compact && item.examples && (
-              <>
-                <h4>{t.workExamples}</h4>
-                <p>{t[item.examples]}</p>
-              </>
-            )}
+            <Link
+              className="text-link"
+              href={`/${locale}/experience/${item.slug}`}
+            >
+              {t.experienceDetail} <span aria-hidden="true">↗</span>
+            </Link>
             {item.technologies.length > 0 && (
               <div className="tags">
                 {item.technologies.map((tech) => (
@@ -102,7 +106,11 @@ export function Education({ locale, t }: { locale: Locale; t: Dictionary }) {
           </div>
           <div>
             <span className="eyebrow">{site.university}</span>
-            <h3>{t[item.degree]}</h3>
+            <h3>
+              <Link href={`/${locale}/education/${item.slug}`}>
+                {t[item.degree]}
+              </Link>
+            </h3>
             <p className="mono">
               {new Intl.NumberFormat(locale, { useGrouping: false }).format(
                 item.start,
@@ -122,6 +130,12 @@ export function Education({ locale, t }: { locale: Locale; t: Dictionary }) {
                 )}
               </p>
             )}
+            <Link
+              className="text-link"
+              href={`/${locale}/education/${item.slug}`}
+            >
+              {t.educationDetail} <span aria-hidden="true">↗</span>
+            </Link>
             {item.thesisTitle && <p lang="sk">{item.thesisTitle}</p>}
             {item.project && (
               <Link href={`/${locale}/projects/${item.project}`}>

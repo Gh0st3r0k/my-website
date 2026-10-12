@@ -147,5 +147,20 @@
   "viewPhoto": "Zobraziť celú fotografiu",
   "settings": "Nastavenia",
   "settingsDescription": "Jazyk a vzhľad",
-  "closeSettings": "Zavrieť nastavenia"
+  "closeSettings": "Zavrieť nastavenia",
+  "bachelorOverview": "Informatiku na FIIT STU som študoval v rokoch 2022–2026. Štúdium som ukončil a obhájil bakalársku prácu: webový simulátor formálnych automatov v Elm.",
+  "bachelorFoundation": "Počas bakalárskeho štúdia som pracoval s programovacími jazykmi, webovým vývojom a počítačovými sieťami. Vytváral som individuálne akademické aplikácie a získal skúsenosti s tímovými projektmi.",
+  "masterOverview": "Od roku 2026 študujem informatiku na magisterskom stupni FIIT STU. Predpokladané ukončenie je v roku 2028. Aktuálne sa venujem architektúre informačných systémov, softvérovej architektúre a tímovému projektu.",
+  "masterTopics": "V rámci aktuálnych magisterských predmetov študujem architektúru informačných systémov a softvérovú architektúru. Popri týchto témach pracujem na univerzitnom tímovom projekte a jeho webe a na projekte Dynamic Authorization Architecture.",
+  "ynetResponsibilities": "Pomáham používateľom, diagnostikujem sieťové problémy a podieľam sa na infraštruktúrnych prácach. Moje úlohy zahŕňajú riešenie hardvérových a softvérových problémov, sieťové zariadenia, kabeláž a používateľské tickety.",
+  "ynetLearning": "Vďaka podpore a úlohám v NetYops/sieťach získavam praktické skúsenosti s reálnou infraštruktúrou. Ďalej sa učím o počítačových sieťach a interných podporných systémoch.",
+  "pafuResponsibilities": "Pracoval som na funkcionalite backendu, vrstve prístupu k dátam, komunikácii s databázou a backendovej logike. Ako člen vývojového tímu som prispel k odporúčaciemu systému. Používal som backendový framework NestJS.",
+  "studiedTopics": "Čo som študoval",
+  "roleResponsibilities": "Moje úlohy",
+  "educationDetail": "Viac o mojom štúdiu",
+  "experienceDetail": "Viac o tejto skúsenosti",
+  "backEducation": "Späť na vzdelanie",
+  "backExperience": "Späť na skúsenosti",
+  "studyPeriod": "Obdobie štúdia",
+  "workPeriod": "Obdobie práce"
 }

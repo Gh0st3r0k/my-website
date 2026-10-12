@@ -50,7 +50,7 @@ Open the preview under `/my-website/`. Both variables must match the build. `npm
 - `src/styles/tokens.css`: centralized dimensions, typography and motion constants.
 - `src/styles/themes/`: light, dark and high-contrast semantic colors. Components share geometry across themes.
 - `src/styles/animations.css`: motion and reduced-motion overrides.
-- `src/app/[locale]/[[...path]]/page.tsx`: route registry and localized SEO.
+- `src/app/[locale]/[[...path]]/page.tsx`: route resolution and localized SEO. `src/content/routes.ts` shares exported paths between static generation and sitemap.
 - `src/app/(entry)/page.tsx`: static root language negotiation.
 - `tests/portfolio.spec.ts`: browser, route and accessibility checks.
 
@@ -66,7 +66,7 @@ npm run build
 PLAYWRIGHT_CHROMIUM_EXECUTABLE=/usr/bin/chromium npm run test:e2e
 ```
 
-Chromium is preinstalled in the cloud machine. Elsewhere install a Playwright browser with `npx playwright install chromium` and omit the executable variable. Playwright starts the static server if necessary. To test a prefixed export, set `NEXT_PUBLIC_BASE_PATH=/my-website` for both build and tests. Tests cover 48 localized routes, locale selection, theme persistence, all responsive layouts, keyboard navigation, reduced motion, original PDF, 404s and automated WCAG AA checks.
+Chromium is preinstalled in the cloud machine. Elsewhere install a Playwright browser with `npx playwright install chromium` and omit the executable variable. Playwright starts the static server if necessary. To test a prefixed export, set `NEXT_PUBLIC_BASE_PATH=/my-website` for both build and tests. Tests cover 64 localized routes, locale selection, theme persistence, all responsive layouts, keyboard navigation, reduced motion, original PDF, 404s and automated WCAG AA checks.
 
 ## Content scope
 
@@ -103,3 +103,9 @@ Example record (only add it after the file exists; replace dimensions and descri
   },
 }
 ```
+
+## Study and work details
+
+Each locale includes `/education/bachelor/`, `/education/master/`, `/experience/ynet/` and `/experience/pafuplex/`. Overview cards link to these pages, which include back navigation and use the same education/experience records as the overview and CV. Edit `slug`, description and section keys in `src/content/portfolio.ts`, and copy in the four dictionaries. `src/components/background-detail.tsx` renders both kinds of detail page.
+
+Only supplied information is used. General academic interests are not assigned to a specific degree unless confirmed. Missing course names, grades, credits, detailed curricula and internal work information are omitted. Further confirmed learning topics can be added as sections without rewriting page components.
