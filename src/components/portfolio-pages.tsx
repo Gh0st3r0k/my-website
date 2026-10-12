@@ -81,7 +81,7 @@ export function Timeline({
               className="text-link"
               href={`/${locale}/experience/${item.slug}`}
             >
-              {t.experienceDetail} <span aria-hidden="true">↗</span>
+              {t.experienceDetail}
             </Link>
             {item.technologies.length > 0 && (
               <div className="tags">
@@ -101,9 +101,6 @@ export function Education({ locale, t }: { locale: Locale; t: Dictionary }) {
     <div className="education-list">
       {education.map((item) => (
         <article className="education-card" key={item.degree} data-reveal>
-          <div className="education-icon" aria-hidden="true">
-            ↗
-          </div>
           <div>
             <span className="eyebrow">{site.university}</span>
             <h3>
@@ -134,13 +131,12 @@ export function Education({ locale, t }: { locale: Locale; t: Dictionary }) {
               className="text-link"
               href={`/${locale}/education/${item.slug}`}
             >
-              {t.educationDetail} <span aria-hidden="true">↗</span>
+              {t.educationDetail}
             </Link>
             {item.thesisTitle && <p lang="sk">{item.thesisTitle}</p>}
             {item.project && (
               <Link href={`/${locale}/projects/${item.project}`}>
                 {t.thesis}: Automatons Simulator{" "}
-                <span aria-hidden="true">↗</span>
               </Link>
             )}
           </div>
@@ -194,7 +190,8 @@ export function ContactLinks({ t }: { t: Dictionary }) {
           <span className="eyebrow">{t[kind]}</span>
           {site[kind] ? (
             <a href={kind === "email" ? `mailto:${site[kind]}` : site[kind]!}>
-              {site[kind]} <span aria-hidden="true">↗</span>
+              {site[kind]}
+              {kind !== "email" && <span aria-hidden="true">↗</span>}
             </a>
           ) : (
             <p>{t.notProvided}</p>
@@ -217,7 +214,7 @@ function ContactCTA({ locale, t }: { locale: Locale; t: Dictionary }) {
         <p>{t.contactIntro}</p>
       </div>
       <Link className="button" href={`/${locale}/contact`}>
-        {t.contact} <span aria-hidden="true">↗</span>
+        {t.contact}
       </Link>
     </section>
   );
@@ -247,15 +244,12 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
           <div className="actions">
             <Link className="button" href={`/${locale}/projects`}>
               {t.explore}
-              <span aria-hidden="true">↗</span>
             </Link>
             <Link className="button secondary" href={`/${locale}/about`}>
               {t.aboutAction}
-              <span aria-hidden="true">→</span>
             </Link>
             <Link className="text-link" href={`/${locale}/cv`}>
               {t.cv}
-              <span aria-hidden="true">↓</span>
             </Link>
             {site.github ? (
               <a className="text-link" href={site.github}>
@@ -271,7 +265,6 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
         <aside className="hero-dossier">
           <div className="dossier-top mono">
             <span>{t.overview}</span>
-            <span aria-hidden="true">↗</span>
           </div>
           {primaryPhoto ? (
             <div className="hero-portrait">
@@ -321,7 +314,7 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
         </span>
         <p>{t.nowPreview}</p>
         <Link href={`/${locale}/now`} aria-label={t.now}>
-          {t.readMore} <span aria-hidden="true">→</span>
+          {t.readMore}
         </Link>
       </div>
       <section className="about-preview" data-reveal>
@@ -332,7 +325,7 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
         <div>
           <p>{t.homeAbout}</p>
           <Link className="text-link" href={`/${locale}/about`}>
-            {t.aboutAction} <span aria-hidden="true">→</span>
+            {t.aboutAction}
           </Link>
         </div>
       </section>
@@ -341,7 +334,7 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
         index="01"
         action={
           <Link className="text-link" href={`/${locale}/projects`}>
-            {t.allProjects} <span aria-hidden="true">↗</span>
+            {t.allProjects}
           </Link>
         }
       >
@@ -366,7 +359,7 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
         <Section title={t.experience} index="02">
           <Timeline locale={locale} t={t} compact />
           <Link className="text-link" href={`/${locale}/experience`}>
-            {t.experience} <span aria-hidden="true">→</span>
+            {t.experience}
           </Link>
         </Section>
         <Section title={t.skills} index="03">

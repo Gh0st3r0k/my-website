@@ -94,12 +94,12 @@ export function BackgroundDetail(props: Props) {
           className="button"
           href={`/${locale}/projects/${props.item.project}`}
         >
-          {t.thesis}: Automatons Simulator <span aria-hidden="true">↗</span>
+          {t.thesis}: Automatons Simulator
         </Link>
       )}
       {props.kind === "education" && props.item.slug === "master" && (
         <Link className="text-link" href={`/${locale}/now`}>
-          {t.now} <span aria-hidden="true">→</span>
+          {t.now}
         </Link>
       )}
     </>

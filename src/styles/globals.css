@@ -185,12 +185,6 @@ main {
   color: var(--color-background);
   font-size: var(--text-lg);
 }
-.monogram > span {
-  position: absolute;
-  right: var(--space-xs);
-  top: 0;
-  font-size: var(--text-xs);
-}
 .desktop-nav {
   display: flex;
   gap: var(--space-md);
@@ -765,10 +759,6 @@ main {
   border: var(--border-width) solid var(--color-border);
   background: var(--color-surface);
   margin-bottom: var(--space-lg);
-}
-.education-icon {
-  color: var(--color-accent);
-  font-size: var(--text-h2);
 }
 .education-card a {
   font-size: var(--text-sm);

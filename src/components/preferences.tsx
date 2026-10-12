@@ -213,7 +213,7 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 export function PrintButton({ label }: { label: string }) {
   return (
     <button className="button secondary" onClick={() => window.print()}>
-      {label} <span aria-hidden="true">↗</span>
+      {label}
     </button>
   );
 }

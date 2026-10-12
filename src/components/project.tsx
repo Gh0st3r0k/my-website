@@ -83,7 +83,6 @@ export function ProjectCard({
           )}{" "}
           / {t[project.category]}
         </span>
-        <span aria-hidden="true">↗</span>
       </div>
       <Link
         className="visual-link"

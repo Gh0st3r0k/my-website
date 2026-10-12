@@ -41,7 +41,7 @@ export function Header({
               />
             ) : (
               <span className="monogram" aria-hidden="true">
-                KZ<span>↗</span>
+                KZ
               </span>
             )}
             <span>
@@ -54,7 +54,7 @@ export function Header({
           </nav>
           <div className="header-tools">
             <Link className="cv-link" href={`/${locale}/cv`}>
-              {t.cv} <span aria-hidden="true">↗</span>
+              {t.cv}
             </Link>
             <Preferences locale={locale} t={t} />
           </div>
@@ -78,9 +78,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Dictionary }) {
           {t.location}
           <p>{t.footer}</p>
         </div>
-        <Link href={`/${locale}/contact`}>
-          {t.contact} <span aria-hidden="true">↗</span>
-        </Link>
+        <Link href={`/${locale}/contact`}>{t.contact}</Link>
         <span className="mono">
           ©{" "}
           {new Intl.NumberFormat(locale, { useGrouping: false }).format(
