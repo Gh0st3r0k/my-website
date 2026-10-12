@@ -635,17 +635,26 @@ main {
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-md);
+  gap: var(--space-xl);
 }
 .skill-card {
   border-top: var(--border-width) solid var(--color-border);
   padding-block: var(--space-lg);
 }
 .skill-card h3 {
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
+  line-height: var(--leading-compact);
+  margin-bottom: var(--space-lg);
+}
+.skill-card .eyebrow {
+  display: block;
+  margin-top: var(--space-lg);
+  line-height: var(--leading-compact);
 }
 .skill-card .tags {
+  margin-top: var(--space-md);
   margin-bottom: 0;
+  row-gap: var(--space-md);
 }
 .skill-card .tags span {
   overflow-wrap: anywhere;
@@ -1175,4 +1184,17 @@ figcaption {
 }
 .education-institution {
   margin-bottom: var(--space-xl);
+}
+
+.education-card h3,
+.education-detail .page-intro h1 {
+  font-family: var(--font-body);
+  line-height: var(--leading-compact);
+  letter-spacing: normal;
+}
+.education-card h3 a {
+  font-size: inherit;
+}
+.education-card h3 {
+  margin-top: var(--space-sm);
 }

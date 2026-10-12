@@ -24,7 +24,7 @@ export function BackgroundDetail(props: Props) {
       timeZone: "UTC",
     }).format(new Date(value));
   return (
-    <>
+    <div className={`background-detail ${kind}-detail`}>
       <Link className="text-link back-link" href={`/${locale}/${kind}`}>
         {kind === "education" ? t.backEducation : t.backExperience}
       </Link>
@@ -101,6 +101,6 @@ export function BackgroundDetail(props: Props) {
           {t.now}
         </Link>
       )}
-    </>
+    </div>
   );
 }
