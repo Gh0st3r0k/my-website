@@ -26,7 +26,6 @@ export function BackgroundDetail(props: Props) {
   return (
     <>
       <Link className="text-link back-link" href={`/${locale}/${kind}`}>
-        <span aria-hidden="true">←</span>
         {kind === "education" ? t.backEducation : t.backExperience}
       </Link>
       <PageIntro

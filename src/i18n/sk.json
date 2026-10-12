@@ -79,7 +79,7 @@
   "homeIntro": "Krátke predstavenie s priestorom na ďalšie objavovanie.",
   "experienceIntro": "Práca vo vývoji aplikácií a IT infraštruktúre.",
   "educationIntro": "Vzdelanie a prebiehajúce štúdium.",
-  "projectsIntro": "Štyri projekty z oblasti automatov, zvuku a sietí.",
+  "projectsIntro": "Projekty z vývoja softvéru, počítačových sietí a osobných aplikácií.",
   "aboutUniversity": "Bakalárske štúdium informatiky na FIIT STU som ukončil v roku 2026. Teraz pokračujem v magisterskom štúdiu informatiky s predpokladaným ukončením v roku 2028.",
   "aboutSoftware": "Rád rozumiem vnútornému fungovaniu systému: architektúre, spolupráci komponentov a príčinám chýb. Baví ma posúvať technický nápad k fungujúcej implementácii. Moje projekty zahŕňajú simuláciu automatov, streamovanie zvuku a sieťové aplikácie.",
   "aboutNetwork": "Zaujíma ma Ethernet, switching, routing, VLAN a IPv4/IPv6. V Ynet pracujem s diagnostikou problémov, kabelážou a sieťovými zariadeniami v reálnej infraštruktúre.",
@@ -162,5 +162,9 @@
   "backEducation": "Späť na vzdelanie",
   "backExperience": "Späť na skúsenosti",
   "studyPeriod": "Obdobie štúdia",
-  "workPeriod": "Obdobie práce"
+  "workPeriod": "Obdobie práce",
+  "institutionDescription": "Fakulta informatiky a informačných technológií Slovenskej technickej univerzity v Bratislave. Moja cesta v informatike: bakalárske štúdium (2022–2026), potom pokračujúce magisterské štúdium (od roku 2026).",
+  "serverSource": "Zdrojový kód servera",
+  "clientSource": "Zdrojový kód klienta",
+  "dndDesc": "Lokálna webová aplikácia pre karty postáv D&D. Hráči vytvárajú a prezerajú svoje postavy; administrátor spravuje hráčov a stavy postáv. Údaje sa ukladajú do súborov JSON."
 }

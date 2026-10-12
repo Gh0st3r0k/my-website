@@ -79,7 +79,7 @@
   "homeIntro": "A quick introduction, with room to explore.",
   "experienceIntro": "Work across application development and IT infrastructure.",
   "educationIntro": "Academic background and ongoing studies.",
-  "projectsIntro": "Four projects across automata, audio and networking.",
+  "projectsIntro": "Projects in software development, networking and personal applications.",
   "aboutUniversity": "I completed my bachelor's degree in Informatics at FIIT STU in 2026. I am now studying for a Master's degree in Informatics, with expected completion in 2028.",
   "aboutSoftware": "I like understanding how a system works internally: its architecture, component interactions and the causes of bugs. I enjoy taking a technical idea through to a working implementation. My projects include automata simulation, audio streaming and networking applications.",
   "aboutNetwork": "I am interested in Ethernet, switching, routing, VLANs and IPv4/IPv6. At Ynet I work with troubleshooting, cabling and network devices in real infrastructure.",
@@ -162,5 +162,9 @@
   "backEducation": "Back to education",
   "backExperience": "Back to experience",
   "studyPeriod": "Study period",
-  "workPeriod": "Work period"
+  "workPeriod": "Work period",
+  "institutionDescription": "Faculty of Informatics and Information Technologies, Slovak University of Technology in Bratislava. My path in Informatics: Bachelor’s studies (2022–2026), followed by ongoing Master’s studies (since 2026).",
+  "serverSource": "Server source",
+  "clientSource": "Client source",
+  "dndDesc": "A local web application for D&D character sheets. Players create and view their characters; administrators manage players and character status. Data is stored in JSON files."
 }

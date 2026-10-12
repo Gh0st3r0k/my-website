@@ -5,7 +5,7 @@ export type Project = {
   description: MessageKey;
   category: MessageKey;
   technologies: string[];
-  visual: "automata" | "audio" | "switch" | "router";
+  visual: "automata" | "audio" | "switch" | "router" | "character";
   featured: boolean;
   featuredCompanion?: string;
   featuredDescription?: MessageKey;
@@ -49,6 +49,9 @@ export const projects: Project[] = [
     technologies: ["Rust", "Svelte"],
     kind: "personalProject",
     sections: [{ title: "features", body: "trinityFeatures" }],
+    links: [
+      { label: "source", href: "https://github.com/linearrain/trinitypeer" },
+    ],
     visual: "audio",
     featured: true,
   },
@@ -59,7 +62,14 @@ export const projects: Project[] = [
     category: "network",
     technologies: ["C#", "ASP.NET Core", "Electron"],
     links: [
-      { label: "source", href: "https://github.com/Gh0st3r0k/Switch-SERVER" },
+      {
+        label: "serverSource",
+        href: "https://github.com/Gh0st3r0k/Switch-SERVER",
+      },
+      {
+        label: "clientSource",
+        href: "https://github.com/Gh0st3r0k/Switch-CLIENT",
+      },
     ],
     kind: "practicalProject",
     role: "projectDeveloper",
@@ -84,8 +94,31 @@ export const projects: Project[] = [
       { title: "features", body: "routerFeatures" },
       { title: "architectureDetail", body: "routerArchitecture" },
     ],
+    links: [
+      {
+        label: "serverSource",
+        href: "https://github.com/Gh0st3r0k/Router-Server",
+      },
+      {
+        label: "clientSource",
+        href: "https://github.com/Gh0st3r0k/ROUTER-CLIENT",
+      },
+    ],
     visual: "router",
     featured: false,
+  },
+  {
+    slug: "dnd-player",
+    name: "D&D Player",
+    description: "dndDesc",
+    category: "personalProject",
+    technologies: ["JavaScript", "Node.js", "JSON"],
+    kind: "personalProject",
+    visual: "character",
+    featured: false,
+    links: [
+      { label: "source", href: "https://github.com/Gh0st3r0k/D-D-player" },
+    ],
   },
 ];
 export type BackgroundSection = { title: MessageKey; body: MessageKey };

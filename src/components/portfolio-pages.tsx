@@ -99,49 +99,56 @@ export function Timeline({
 export function Education({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
     <div className="education-list">
-      {education.map((item) => (
-        <article className="education-card" key={item.degree} data-reveal>
-          <div>
-            <span className="eyebrow">{site.university}</span>
-            <h3>
-              <Link href={`/${locale}/education/${item.slug}`}>
-                {t[item.degree]}
-              </Link>
-            </h3>
-            <p className="mono">
-              {new Intl.NumberFormat(locale, { useGrouping: false }).format(
-                item.start,
-              )}{" "}
-              —{" "}
-              {item.end
-                ? new Intl.NumberFormat(locale, { useGrouping: false }).format(
-                    item.end,
-                  )
-                : t.present}
-            </p>
-            {item.expectedEnd && (
-              <p>
-                {t.expectedGraduation}:{" "}
+      <header className="education-institution">
+        <h2>{site.university}</h2>
+        <p className="prose">{t.institutionDescription}</p>
+      </header>
+      {[...education]
+        .sort((a, b) => a.start - b.start)
+        .map((item) => (
+          <article className="education-card" key={item.degree} data-reveal>
+            <div>
+              <span className="eyebrow">{t.university}</span>
+              <h3>
+                <Link href={`/${locale}/education/${item.slug}`}>
+                  {t[item.degree]}
+                </Link>
+              </h3>
+              <p className="mono">
                 {new Intl.NumberFormat(locale, { useGrouping: false }).format(
-                  item.expectedEnd,
-                )}
+                  item.start,
+                )}{" "}
+                —{" "}
+                {item.end
+                  ? new Intl.NumberFormat(locale, {
+                      useGrouping: false,
+                    }).format(item.end)
+                  : t.present}
               </p>
-            )}
-            <Link
-              className="text-link"
-              href={`/${locale}/education/${item.slug}`}
-            >
-              {t.educationDetail}
-            </Link>
-            {item.thesisTitle && <p lang="sk">{item.thesisTitle}</p>}
-            {item.project && (
-              <Link href={`/${locale}/projects/${item.project}`}>
-                {t.thesis}: Automatons Simulator{" "}
+              {item.expectedEnd && (
+                <p>
+                  {t.expectedGraduation}:{" "}
+                  {new Intl.NumberFormat(locale, { useGrouping: false }).format(
+                    item.expectedEnd,
+                  )}
+                </p>
+              )}
+              <p>{t[item.description]}</p>
+              <Link
+                className="text-link"
+                href={`/${locale}/education/${item.slug}`}
+              >
+                {t.educationDetail}
               </Link>
-            )}
-          </div>
-        </article>
-      ))}
+              {item.thesisTitle && <p lang="sk">{item.thesisTitle}</p>}
+              {item.project && (
+                <Link href={`/${locale}/projects/${item.project}`}>
+                  {t.thesis}: Automatons Simulator{" "}
+                </Link>
+              )}
+            </div>
+          </article>
+        ))}
     </div>
   );
 }
@@ -191,7 +198,6 @@ export function ContactLinks({ t }: { t: Dictionary }) {
           {site[kind] ? (
             <a href={kind === "email" ? `mailto:${site[kind]}` : site[kind]!}>
               {site[kind]}
-              {kind !== "email" && <span aria-hidden="true">↗</span>}
             </a>
           ) : (
             <p>{t.notProvided}</p>
@@ -253,7 +259,7 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
             </Link>
             {site.github ? (
               <a className="text-link" href={site.github}>
-                {t.github} ↗
+                {t.github}
               </a>
             ) : (
               <span className="unavailable" title={t.githubPending}>
@@ -521,7 +527,7 @@ export function PortfolioPage({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {t.viewOriginalCv} ↗
+                {t.viewOriginalCv}
               </a>
             )}
             {site.cv ? (
@@ -551,7 +557,11 @@ export function PortfolioPage({
             <div className="cv-projects">
               {projects.map((project) => (
                 <div key={project.slug}>
-                  <h3>{project.name}</h3>
+                  <h3>
+                    <Link href={`/${locale}/projects/${project.slug}`}>
+                      {project.name}
+                    </Link>
+                  </h3>
                   <p>{t[project.description]}</p>
                 </div>
               ))}
@@ -577,7 +587,6 @@ export function ProjectDetail({
   return (
     <>
       <Link className="text-link back-link" href={`/${locale}/projects`}>
-        <span aria-hidden="true">←</span>
         {t.backProjects}
       </Link>
       <PageIntro
@@ -650,7 +659,7 @@ export function ProjectDetail({
           <div className="actions">
             {project.links.map((link) => (
               <a className="text-link" key={link.href} href={link.href}>
-                {t[link.label]} ↗
+                {t[link.label]}
               </a>
             ))}
           </div>

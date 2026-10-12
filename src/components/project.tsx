@@ -43,6 +43,12 @@ export function ProjectVisual({
               />
             ))}
           </>
+        ) : kind === "character" ? (
+          <>
+            <rect x="120" y="25" width="180" height="170" rx="14" />
+            <circle cx="210" cy="75" r="22" />
+            <path d="M170 125Q210 90 250 125M155 150H265M155 170H235" />
+          </>
         ) : companion === "switch" || companion === "router" ? (
           <>
             <g transform="translate(-5 40) scale(.62)">
@@ -84,14 +90,18 @@ export function ProjectCard({
           / {t[project.category]}
         </span>
       </div>
-      <Link
-        className="visual-link"
-        tabIndex={-1}
-        aria-hidden="true"
-        href={`/${locale}/projects/${project.slug}`}
-      >
-        <ProjectVisual kind={project.visual} companion={related?.visual} />
-      </Link>
+      {related ? (
+        <ProjectVisual kind={project.visual} companion={related.visual} />
+      ) : (
+        <Link
+          className="visual-link"
+          tabIndex={-1}
+          aria-hidden="true"
+          href={`/${locale}/projects/${project.slug}`}
+        >
+          <ProjectVisual kind={project.visual} />
+        </Link>
+      )}
       <div className="card-body">
         <h3>
           <Link href={`/${locale}/projects/${project.slug}`}>
@@ -121,13 +131,23 @@ export function ProjectCard({
             <span key={tech}>{tech}</span>
           ))}
         </div>
-        <Link
-          className="card-action"
-          href={`/${locale}/projects/${project.slug}`}
-        >
-          {t.detail}
-          <span aria-hidden="true">↗</span>
-        </Link>
+        <div className="project-actions">
+          {[project, ...(related ? [related] : [])].map((item) => (
+            <Link
+              key={item.slug}
+              className="card-action"
+              href={`/${locale}/projects/${item.slug}`}
+            >
+              {related ? item.name : t.detail}
+            </Link>
+          ))}
+          {!related &&
+            project.links?.map((link) => (
+              <a className="text-link" key={link.href} href={link.href}>
+                {t[link.label]}
+              </a>
+            ))}
+        </div>
       </div>
     </article>
   );

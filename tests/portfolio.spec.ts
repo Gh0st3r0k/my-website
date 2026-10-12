@@ -36,6 +36,7 @@ const paths = [
   "projects/trinitypeer",
   "projects/switch",
   "projects/router",
+  "projects/dnd-player",
   "education/bachelor",
   "education/master",
   "experience/ynet",
@@ -166,7 +167,7 @@ test("keyboard skip link, mobile menu, reduced motion and original CV", async ({
     page.getByRole("button", { name: "Print / save as PDF" }),
   ).toBeVisible();
 });
-test("unknown routes return 404; sitemap contains all 64 routes", async ({
+test("unknown routes return 404; sitemap contains all portfolio routes", async ({
   request,
 }) => {
   for (const path of [
@@ -179,7 +180,9 @@ test("unknown routes return 404; sitemap contains all 64 routes", async ({
     expect((await request.get(target(path))).status()).toBe(404);
   const sitemap = await request.get(target("/sitemap.xml"));
   expect(sitemap.status()).toBe(200);
-  expect((await sitemap.text()).match(/<url>/g)?.length).toBe(64);
+  expect((await sitemap.text()).match(/<url>/g)?.length).toBe(
+    locales.length * paths.length,
+  );
   expect((await request.get(target("/robots.txt"))).status()).toBe(200);
 });
 
@@ -294,7 +297,7 @@ test("published content has confirmed details and hides unfilled sections", asyn
   );
   await expect(
     page.getByRole("heading", { name: "Links", exact: true }),
-  ).toHaveCount(0);
+  ).toHaveCount(1);
 });
 
 test("language switches preserve every appearance choice and the original name", async ({
@@ -447,4 +450,27 @@ test("new study and work details are accessible on phone and desktop", async ({
       ).toEqual([]);
     }
   }
+});
+
+test("network projects expose both destinations and source links without navigation arrows", async ({
+  page,
+}) => {
+  await page.goto(target("/en/"));
+  const card = page.locator(".project-card").last();
+  await expect(
+    card.locator(".card-action").filter({ hasText: "Switch" }),
+  ).toHaveAttribute("href", /projects\/switch\/$/);
+  await expect(
+    card.locator(".card-action").filter({ hasText: "Router" }),
+  ).toHaveAttribute("href", /projects\/router\/$/);
+  expect(await page.locator("a, button").allTextContents()).not.toEqual(
+    expect.arrayContaining([expect.stringMatching(/[←↗→]/)]),
+  );
+  await page.goto(target("/en/projects/router/"));
+  await expect(
+    page.getByRole("link", { name: "Server source", exact: true }),
+  ).toHaveAttribute("href", "https://github.com/Gh0st3r0k/Router-Server");
+  await expect(
+    page.getByRole("link", { name: "Client source", exact: true }),
+  ).toHaveAttribute("href", "https://github.com/Gh0st3r0k/ROUTER-CLIENT");
 });
