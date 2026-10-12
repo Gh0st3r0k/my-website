@@ -1,6 +1,11 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useSyncExternalStore, useEffect, useRef } from "react";
+import {
+  useSyncExternalStore,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import { locales, type Locale } from "@/config/site";
 import type { Dictionary } from "@/i18n";
 const names = {
@@ -82,6 +87,24 @@ export function Preferences({ locale, t }: { locale: Locale; t: Dictionary }) {
 export function MotionRoot({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  useLayoutEffect(() => {
+    // Route navigation always begins at the top; explicit anchors keep their target.
+    if (window.location.hash) return;
+    const reset = () =>
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    reset();
+    // Run after the router's own layout scroll handling as well.
+    const frame = requestAnimationFrame(reset);
+    return () => cancelAnimationFrame(frame);
+  }, [pathname]);
+  useEffect(() => {
+    const onRestore = (event: PageTransitionEvent) => {
+      if (event.persisted && !window.location.hash)
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    };
+    window.addEventListener("pageshow", onRestore);
+    return () => window.removeEventListener("pageshow", onRestore);
+  }, []);
   useEffect(() => {
     const elements =
       ref.current?.querySelectorAll<HTMLElement>("[data-reveal]") || [];

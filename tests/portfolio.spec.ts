@@ -177,3 +177,44 @@ test("WCAG AA automated checks in all themes and representative layouts", async 
     }
   }
 });
+
+test("returning to visited pages starts at the top, including browser history", async ({
+  page,
+}) => {
+  await page.goto(target("/en/"));
+  await page.getByRole("combobox", { name: "Appearance" }).selectOption("dark");
+  await page.locator(".site-footer").scrollIntoViewIfNeeded();
+  await page
+    .locator(".contact-cta")
+    .getByRole("link", { name: "Contact", exact: false })
+    .click();
+  await expect(page).toHaveURL(/\/en\/contact\/$/);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+  await page.goBack();
+  await expect(page).toHaveURL(/\/en\/$/);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+  await page.locator(".site-footer").scrollIntoViewIfNeeded();
+  await page.reload();
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+  await page
+    .locator(".desktop-nav")
+    .getByRole("link", { name: "Projects", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/en\/projects\/$/);
+  await page.locator(".site-footer").scrollIntoViewIfNeeded();
+  await page
+    .locator(".site-footer")
+    .getByRole("link", { name: "Contact", exact: false })
+    .click();
+  await page
+    .locator(".desktop-nav")
+    .getByRole("link", { name: "Projects", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/en\/projects\/$/);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+  await page.keyboard.press("Tab");
+  await page.goto(target("/en/#main"));
+  await page.getByRole("link", { name: "Skip to content" }).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#main")).toBeFocused();
+});
