@@ -1,6 +1,6 @@
 # Kostiantyn Zaitsev — portfolio
 
-Next.js 16 App Router, React 19 and strict TypeScript. Four locales and four appearance modes, exported as static HTML for GitHub Pages. The Stitch archive informed the visual design; CV facts and embedded links supply verified personal content.
+Next.js 16 App Router, React 19 and strict TypeScript. Four locales and four appearance modes, exported as static HTML for GitHub Pages. The Stitch archive informed the visual design; CV facts and the supplied content brief provide verified personal content.
 
 ## GitHub Pages deployment
 
@@ -68,6 +68,10 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE=/usr/bin/chromium npm run test:e2e
 
 Chromium is preinstalled in the cloud machine. Elsewhere install a Playwright browser with `npx playwright install chromium` and omit the executable variable. Playwright starts the static server if necessary. To test a prefixed export, set `NEXT_PUBLIC_BASE_PATH=/my-website` for both build and tests. Tests cover 48 localized routes, locale selection, theme persistence, all responsive layouts, keyboard navigation, reduced motion, original PDF, 404s and automated WCAG AA checks.
 
-## Remaining content
+## Content scope
 
-Detailed case studies, real screenshots, personal working principles, interests outside IT, current learning and goals can be expanded with confirmed content. Links and the two project descriptions were updated from the supplied CV. There is no inferred work history, fake telemetry or invented achievement.
+About, experience, education, skills, project details and Now are populated from the supplied brief in all four locales. Now records the content date explicitly (`nowUpdated` in `src/content/portfolio.ts`); it is not a live activity feed. Practical skills and academic use are distinguished without proficiency ratings.
+
+Automatons Simulator covers finite automata; pushdown automata and Turing machines are described as experimental directions. The Router feature list was checked against its public server source (routing, packet forwarding, ARP, DHCP and RIPv2); this is source inspection, not a functional validation of that application.
+
+Unfilled case-study sections, uncertain roles/statuses and deferred links are omitted. Screenshots, further confirmed project details and any future publicly approved team case studies can be added later. Internal infrastructure, addresses, credentials, user data and nonpublic partner/project details are not published. The original supplied PDF remains unchanged.

@@ -54,11 +54,13 @@ export function ProjectVisual({ kind }: { kind: Project["visual"] }) {
 }
 export function ProjectCard({
   project,
+  related,
   index,
   locale,
   t,
 }: {
   project: Project;
+  related?: Project;
   index: number;
   locale: Locale;
   t: Dictionary;
@@ -87,8 +89,25 @@ export function ProjectCard({
           <Link href={`/${locale}/projects/${project.slug}`}>
             {project.name}
           </Link>
+          {related && (
+            <>
+              {" "}
+              /{" "}
+              <Link href={`/${locale}/projects/${related.slug}`}>
+                {related.name}
+              </Link>
+            </>
+          )}
         </h3>
-        <p>{t[project.description]}</p>
+        <p>
+          {
+            t[
+              related && project.featuredDescription
+                ? project.featuredDescription
+                : project.description
+            ]
+          }
+        </p>
         <div className="tags">
           {project.technologies.map((tech) => (
             <span key={tech}>{tech}</span>

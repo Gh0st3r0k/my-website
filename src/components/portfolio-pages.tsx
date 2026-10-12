@@ -6,6 +6,8 @@ import {
   projects,
   experience,
   education,
+  certifications,
+  nowUpdated,
   skills,
   now,
   about,
@@ -69,6 +71,12 @@ export function Timeline({
             <span className="eyebrow">{item.company}</span>
             <h3>{t[item.role]}</h3>
             <p>{t[item.description]}</p>
+            {!compact && item.examples && (
+              <>
+                <h4>{t.workExamples}</h4>
+                <p>{t[item.examples]}</p>
+              </>
+            )}
             {item.technologies.length > 0 && (
               <div className="tags">
                 {item.technologies.map((tech) => (
@@ -104,6 +112,15 @@ export function Education({ locale, t }: { locale: Locale; t: Dictionary }) {
                   )
                 : t.present}
             </p>
+            {item.expectedEnd && (
+              <p>
+                {t.expectedGraduation}:{" "}
+                {new Intl.NumberFormat(locale, { useGrouping: false }).format(
+                  item.expectedEnd,
+                )}
+              </p>
+            )}
+            {item.thesisTitle && <p lang="sk">{item.thesisTitle}</p>}
             {item.project && (
               <Link href={`/${locale}/projects/${item.project}`}>
                 {t.thesis}: Automatons Simulator{" "}
@@ -116,12 +133,19 @@ export function Education({ locale, t }: { locale: Locale; t: Dictionary }) {
     </div>
   );
 }
-export function Skills({ t }: { t: Dictionary }) {
+export function Skills({
+  t,
+  compact = false,
+}: {
+  t: Dictionary;
+  compact?: boolean;
+}) {
   return (
     <div className="skills-grid">
       {skills.map((item) => (
         <article className="skill-card" key={item.category} data-reveal>
           <h3>{t[item.category]}</h3>
+          {!compact && <span className="eyebrow">{t.skillPractice}</span>}
           <div className="tags">
             {item.entries.map((entry, index) => (
               <span key={index}>
@@ -129,6 +153,18 @@ export function Skills({ t }: { t: Dictionary }) {
               </span>
             ))}
           </div>
+          {!compact && item.academic?.length && (
+            <>
+              <span className="eyebrow">{t.skillAcademic}</span>
+              <div className="tags">
+                {item.academic.map((entry, index) => (
+                  <span key={index}>
+                    {typeof entry === "string" ? entry : t[entry.key]}
+                  </span>
+                ))}
+              </div>
+            </>
+          )}
         </article>
       ))}
     </div>
@@ -256,7 +292,7 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
           <span className="signal" aria-hidden="true" />
           {t.now}
         </span>
-        <p>{t.nowUniversity}</p>
+        <p>{t.nowPreview}</p>
         <Link href={`/${locale}/now`} aria-label={t.now}>
           {t.readMore} <span aria-hidden="true">→</span>
         </Link>
@@ -267,7 +303,7 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
           <h2>{t.aboutIntro}</h2>
         </div>
         <div>
-          <p>{t.aboutSoftware}</p>
+          <p>{t.homeAbout}</p>
           <Link className="text-link" href={`/${locale}/about`}>
             {t.aboutAction} <span aria-hidden="true">→</span>
           </Link>
@@ -289,6 +325,9 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
               <ProjectCard
                 key={project.slug}
                 project={project}
+                related={projects.find(
+                  (item) => item.slug === project.featuredCompanion,
+                )}
                 index={index}
                 locale={locale}
                 t={t}
@@ -304,7 +343,7 @@ export function Home({ locale, t }: { locale: Locale; t: Dictionary }) {
           </Link>
         </Section>
         <Section title={t.skills} index="03">
-          <Skills t={t} />
+          <Skills t={t} compact />
         </Section>
       </div>
       <ContactCTA locale={locale} t={t} />
@@ -397,18 +436,51 @@ export function PortfolioPage({
           ))}
         </div>
       )}
-      {page === "experience" && <Timeline locale={locale} t={t} />}
-      {page === "education" && <Education locale={locale} t={t} />}
+      {page === "experience" && (
+        <>
+          <Timeline locale={locale} t={t} />
+          <Section title={t.skills}>
+            <Skills t={t} />
+          </Section>
+        </>
+      )}
+      {page === "education" && (
+        <>
+          <Education locale={locale} t={t} />
+          <Section title={t.learning}>
+            <p className="prose">{t.educationInterests}</p>
+          </Section>
+          <Section title={t.certifications}>
+            <ul>
+              {certifications.map((name) => (
+                <li key={name}>{name}</li>
+              ))}
+            </ul>
+          </Section>
+        </>
+      )}
       {page === "now" && (
-        <div className="now-grid">
-          {now.map((item) => (
-            <section className="now-card" key={item.category} data-reveal>
-              <span className="signal" aria-hidden="true" />
-              <h2>{t[item.category]}</h2>
-              <p>{t[item.body]}</p>
-            </section>
-          ))}
-        </div>
+        <>
+          <p className="mono">
+            {t.lastUpdated}:{" "}
+            <time dateTime={nowUpdated}>
+              {new Intl.DateTimeFormat(locale, {
+                month: "long",
+                year: "numeric",
+                timeZone: "UTC",
+              }).format(new Date(nowUpdated))}
+            </time>
+          </p>
+          <div className="now-grid">
+            {now.map((item) => (
+              <section className="now-card" key={item.category} data-reveal>
+                <span className="signal" aria-hidden="true" />
+                <h2>{t[item.category]}</h2>
+                <p>{t[item.body]}</p>
+              </section>
+            ))}
+          </div>
+        </>
       )}
       {page === "contact" && (
         <>
@@ -501,6 +573,24 @@ export function ProjectDetail({
         <aside className="project-facts">
           <span className="eyebrow">{t.category}</span>
           <p>{t[project.category]}</p>
+          {project.kind && (
+            <>
+              <span className="eyebrow">{t.projectKind}</span>
+              <p>{t[project.kind]}</p>
+            </>
+          )}
+          {project.role && (
+            <>
+              <span className="eyebrow">{t.projectRole}</span>
+              <p>{t[project.role]}</p>
+            </>
+          )}
+          {project.status && (
+            <>
+              <span className="eyebrow">{t.projectStatus}</span>
+              <p>{t[project.status]}</p>
+            </>
+          )}
           <span className="eyebrow">{t.technologies}</span>
           <div className="tags">
             {project.technologies.map((tech) => (
@@ -511,30 +601,12 @@ export function ProjectDetail({
       </div>
       <Section title={t.overview}>
         <p className="prose">{t[project.description]}</p>
-        <p className="content-note">{t.projectPending}</p>
       </Section>
-      {project.sections &&
-        Object.entries(project.sections).map(([key, text]) =>
-          text[locale] ? (
-            <Section
-              key={key}
-              title={
-                t[
-                  key === "architecture"
-                    ? "architectureDetail"
-                    : (key as
-                        | "problem"
-                        | "solution"
-                        | "features"
-                        | "challenges"
-                        | "learned")
-                ]
-              }
-            >
-              <p className="prose">{text[locale]}</p>
-            </Section>
-          ) : null,
-        )}
+      {project.sections?.map((section) => (
+        <Section key={section.title} title={t[section.title]}>
+          <p className="prose">{t[section.body]}</p>
+        </Section>
+      ))}
       {project.screenshots?.length ? (
         <Section title={t.screenshots}>
           <div className="screenshot-grid">
@@ -553,17 +625,17 @@ export function ProjectDetail({
           </div>
         </Section>
       ) : null}
-      <Section title={t.links}>
-        {project.links?.length ? (
-          project.links.map((link) => (
-            <a key={link.href} href={link.href}>
-              {t[link.label]} ↗
-            </a>
-          ))
-        ) : (
-          <p>{t.projectLinks}</p>
-        )}
-      </Section>
+      {project.links?.length ? (
+        <Section title={t.links}>
+          <div className="actions">
+            {project.links.map((link) => (
+              <a className="text-link" key={link.href} href={link.href}>
+                {t[link.label]} ↗
+              </a>
+            ))}
+          </div>
+        </Section>
+      ) : null}
     </>
   );
 }

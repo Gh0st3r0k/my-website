@@ -218,3 +218,50 @@ test("returning to visited pages starts at the top, including browser history", 
   await page.keyboard.press("Enter");
   await expect(page.locator("#main")).toBeFocused();
 });
+
+test("published content has confirmed details and hides unfilled sections", async ({
+  page,
+}) => {
+  for (const locale of locales) {
+    await page.goto(target(`/${locale}/about/`));
+    expect(await page.locator(".editorial-list section").count()).toBe(6);
+    expect(await page.locator("main").innerText()).not.toMatch(
+      /More details will be added|после подтверждения|po potvrdení|після підтвердження/,
+    );
+    await page.goto(target(`/${locale}/now/`));
+    await expect(page.locator('time[datetime="2026-10-12"]')).toBeVisible();
+    expect(await page.locator(".now-card").count()).toBe(5);
+    expect(await page.locator("main").innerText()).not.toMatch(
+      /RIS-AssetData|SEPS/,
+    );
+    await page.goto(target(`/${locale}/projects/automata-simulator/`));
+    expect(await page.locator("main").innerText()).toContain("DFA");
+    expect(await page.locator("main").innerText()).toContain(
+      "Model–View–Update",
+    );
+    await expect(page.locator(".content-note")).toHaveCount(0);
+    await page.goto(target(`/${locale}/projects/trinitypeer/`));
+    await expect(page.locator(".content-note")).toHaveCount(0);
+    await expect(page.locator(".project-facts")).not.toContainText(
+      /Completed|заверш|dokončen/i,
+    );
+    await page.goto(target(`/${locale}/education/`));
+    expect(await page.locator("main").innerText()).toContain("2028");
+    expect(await page.locator("main").innerText()).toContain(
+      "Google AI Essentials",
+    );
+    expect(await page.locator("main").innerText()).not.toMatch(/CCNA2|CCNA3/);
+  }
+  await page.goto(target("/en/"));
+  await expect(page.locator(".project-grid h3").last()).toHaveText(
+    "Switch / Router",
+  );
+  await page.goto(target("/en/projects/trinitypeer/"));
+  await expect(page.getByRole("heading", { name: "My role" })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Challenges" })).toHaveCount(
+    0,
+  );
+  await expect(
+    page.getByRole("heading", { name: "Links", exact: true }),
+  ).toHaveCount(0);
+});
