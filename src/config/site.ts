@@ -12,6 +12,7 @@ export const pages = [
   "cv",
 ] as const;
 export type Page = "home" | (typeof pages)[number];
+// Keep public assets and SEO URLs aligned with the build-time hosting prefix.
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export const assetPath = (path: string) => `${basePath}${path}`;
 export const siteUrl = (path: string) =>

@@ -20,6 +20,7 @@ createServer(async (req, res) => {
     let pathname = decodeURIComponent(
       new URL(req.url, "http://localhost").pathname,
     );
+    // Match the prefix at a path boundary so similarly named directories stay outside it.
     if (prefix && !(pathname === prefix || pathname.startsWith(prefix + "/"))) {
       res.writeHead(404);
       res.end();
@@ -27,6 +28,7 @@ createServer(async (req, res) => {
     }
     pathname = pathname.slice(prefix.length) || "/";
     let file = resolve(root, "." + pathname);
+    // Reject resolved paths outside the export directory.
     if (file !== root && !file.startsWith(root + sep)) {
       res.writeHead(403);
       res.end();
@@ -55,6 +57,7 @@ createServer(async (req, res) => {
       body = await readFile(file);
     } catch {
       res.writeHead(404, { "Content-Type": "text/html" });
+      // Serve the exported error page while preserving the HTTP 404 status.
       res.end(await readFile(resolve(root, "404.html")));
       return;
     }

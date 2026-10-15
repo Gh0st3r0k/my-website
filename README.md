@@ -1,113 +1,176 @@
-# Kostiantyn Zaitsev — portfolio
+<div align="center">
 
-Next.js 16 App Router, React 19 and strict TypeScript. Four locales and four appearance modes, exported as static HTML for GitHub Pages. The Stitch archive informed the visual design; CV facts and the supplied content brief provide verified personal content.
+# Kostiantyn Zaitsev · Portfolio
 
-## GitHub Pages deployment
+**Projects, experience, and the work behind them.**
 
-1. Push the project files to `main` in `Gh0st3r0k/my-website`.
-2. Open repository **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions** (do this before the workflow runs).
-3. Open **Actions → Deploy portfolio to GitHub Pages**. A push to `main` or **Run workflow** builds and deploys `out/`. Approve the `github-pages` environment if the repository has protection rules.
+A multilingual personal website with accessible themes, detailed project pages, and a downloadable CV.
 
-Expected project URL: **https://gh0st3r0k.github.io/my-website/**. This is the configured target, not a claim that deployment has already happened.
+[Explore the site](https://gh0st3r0k.github.io/my-website/) · [Getting started](#getting-started) · [Content guide](#content-guide) · [Deployment](#deployment)
 
-`.github/workflows/pages.yml` obtains the origin and path from `actions/configure-pages`: it supports project paths, user sites and configured custom domains without hardcoding a deploy prefix. Only static output is uploaded; no Node.js server is needed on Pages. Deep routes export as `index.html` in directories, so refreshes work. Next links and scripts receive `basePath`; PDF, image paths, canonical URLs, sitemap and hreflang use the same prefix.
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)
+![Hosting](https://img.shields.io/badge/GitHub_Pages-static-222222?logo=github&logoColor=white)
 
-The root chooses saved locale cookie → browser languages → English using a small pre-render script, because Pages has no server-side middleware. Without JavaScript it shows four language links. Locale URLs always determine language. Language and appearance controls live in a keyboard-accessible Settings dialog in the header. The language selector loads the target locale document so its head script restores the saved appearance before paint; ordinary navigation within a locale remains client-side. System appearance follows OS preference; other choices persist locally.
+English · Slovenčina · Русский · Українська
 
-## Local development
+</div>
 
-Node.js 24 LTS (tested with 24.19.0).
+---
+
+## Overview
+
+A personal portfolio built with **Next.js App Router, React, and TypeScript**, exported as static HTML. Content is shared across overview and detail pages, with translated copy in four dictionaries and no backend required for hosting.
+
+| Page                   | What you will find                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------------ |
+| Home & About           | Introduction, selected work, background, and personal photos.                              |
+| Projects               | Project summaries and individual detail pages, with optional case studies and screenshots. |
+| Experience & Education | Overview cards and dedicated pages for work and study records.                             |
+| Now                    | Current activities with an explicit content update date.                                   |
+| Contact & CV           | Contact links, a localized web CV, and the original PDF to view or download.               |
+
+### Built for everyday browsing
+
+- **Four languages:** localized URLs, translated content, and language selection that remembers your choice.
+- **Flexible appearance:** system, light, dark, and high-contrast modes with saved preferences.
+- **Accessible interaction:** keyboard navigation, a Settings dialog, and reduced-motion support.
+- **Static hosting:** directory-based routes, localized metadata, canonical URLs, hreflang, and a sitemap.
+- **Local assets:** bundled fonts, project illustrations, personal photos, and the original CV.
+
+The header illustration is separate from the real portrait gallery. All appearance modes share the same layout and typography.
+
+## Getting started
+
+Use **Node.js 24 LTS**, matching the deployment workflow.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-If the npm cache is not writable in the cloud sandbox, use `npm --cache /tmp/npm-cache ci`. The existing checkout is isolated; do not create an extra Git worktree.
+Open [localhost:3000](http://localhost:3000). The root selects a saved locale cookie, then a supported browser language, then English. Without JavaScript, it offers language links. A localized URL always determines the page language.
 
-Local static build and preview:
+### Preview the static export
 
 ```sh
 npm run build
 npm run start
 ```
 
-Reproduce the Pages path locally:
+The preview server serves `out/` using file and directory lookup. Missing routes return a 404, so the preview can expose missing exports before deployment.
+
+To reproduce the GitHub Pages project path:
 
 ```sh
 NEXT_PUBLIC_BASE_PATH=/my-website NEXT_PUBLIC_SITE_URL=https://gh0st3r0k.github.io npm run build
 NEXT_PUBLIC_BASE_PATH=/my-website npm run start
 ```
 
-Open the preview under `/my-website/`. Both variables must match the build. `npm run start` serves `out/` with ordinary file and directory lookup; it does not use an SPA fallback. This exposes missing exports instead of disguising them. `.env.example` documents build-time variables.
+Open [localhost:3000/my-website/](http://localhost:3000/my-website/). The preview's base path must match the build. See [`.env.example`](.env.example) for build-time configuration.
 
-## Editing
+If the sandbox npm cache is not writable, use `npm --cache /tmp/npm-cache ci`.
 
-- `src/config/site.ts`: verified email, GitHub, LinkedIn, PDF path, origin and path helpers.
-- `public/cv.pdf`: original supplied CV, accessible for viewing and download on each locale’s CV page. The localized web CV remains a separate summary.
-- `src/content/portfolio.ts`: projects, experience, education, skills, about and current activities shared by Home and detail pages. Optional case-study sections and screenshots render when supplied.
-- `src/i18n/{en,sk,ru,uk}.json`: interface and descriptive translations with identical typed keys.
-- `src/styles/tokens.css`: centralized dimensions, typography and motion constants.
-- `src/styles/themes/`: light, dark and high-contrast semantic colors. Components share geometry across themes.
-- `src/styles/animations.css`: motion and reduced-motion overrides.
-- `src/app/[locale]/[[...path]]/page.tsx`: route resolution and localized SEO. `src/content/routes.ts` shares exported paths between static generation and sitemap.
-- `src/app/(entry)/page.tsx`: static root language negotiation.
-- `tests/portfolio.spec.ts`: browser, route and accessibility checks.
+## Content guide
 
-Fonts are packaged locally; project SVGs are conceptual illustrations. The original CV contains personal contact information and will be public with the site. No analytics or external contact service is required.
+Most updates belong in content and configuration files:
 
-## Checks
+| File or directory                                        | Edit here to…                                                                     |
+| -------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [`src/config/site.ts`](src/config/site.ts)               | Update identity, contact links, header artwork, PDF location, and URL helpers.    |
+| [`src/content/portfolio.ts`](src/content/portfolio.ts)   | Edit projects, experience, education, skills, About, and current activities.      |
+| [`src/content/photos.ts`](src/content/photos.ts)         | Register personal photos, dimensions, translated alt text, and optional captions. |
+| [`src/i18n/`](src/i18n/)                                 | Update English, Slovak, Russian, and Ukrainian copy with matching typed keys.     |
+| [`src/content/routes.ts`](src/content/routes.ts)         | Maintain the shared paths used by static generation and the sitemap.              |
+| [`src/styles/tokens.css`](src/styles/tokens.css)         | Adjust shared dimensions, typography, and motion constants.                       |
+| [`src/styles/themes/`](src/styles/themes/)               | Change semantic colors for light, dark, and high-contrast themes.                 |
+| [`src/styles/animations.css`](src/styles/animations.css) | Tune animations and reduced-motion overrides.                                     |
+| [`public/cv.pdf`](public/cv.pdf)                         | Replace the original downloadable CV.                                             |
+
+### Photos and project images
+
+```text
+public/images/
+├── general/                  # Site illustrations and header artwork
+├── personal/                 # Portraits and visitor-facing personal photos
+└── projects/<project-slug>/   # Project screenshots
+```
+
+Add a personal photo file first, then register it in `src/content/photos.ts` using its public path without the deployment prefix:
+
+```ts
+{
+  src: "/images/personal/portrait.webp",
+  width: 1200,
+  height: 1600,
+  alt: {
+    en: "Portrait of Kostiantyn Zaitsev",
+    sk: "Portrét Kostiantyna Zaitseva",
+    ru: "Портрет Kostiantyn Zaitsev",
+    uk: "Портрет Kostiantyn Zaitsev",
+  },
+}
+```
+
+Use the actual image dimensions and meaningful descriptions in every language. The first photo becomes the main portrait; additional photos form a responsive grid on About. Images preserve their aspect ratio and open at full size. An empty list hides the gallery. No React component changes are needed.
+
+Register project screenshots on the corresponding project record. The deployment prefix is added automatically. Everything under `public/`, including photos and contact information in the PDF, is public after deployment.
+
+### Detail pages and content conventions
+
+Education and experience records provide both overview cards and detail pages, including `/education/bachelor/`, `/education/master/`, `/experience/ynet/`, and `/experience/pafuplex/`. Edit record slugs and section keys in `src/content/portfolio.ts`, then update the four dictionaries. [`background-detail.tsx`](src/components/background-detail.tsx) renders both detail types.
+
+Keep personal claims grounded in the supplied CV and content brief. Omit unfilled case-study sections, uncertain roles, and deferred links until confirmed. `nowUpdated` records the content date; Now is maintained manually.
+
+Automatons Simulator covers finite automata; pushdown automata and Turing machines are experimental directions. Router features were checked against its public server source, rather than functionally tested. Practical skills and academic use are described separately, without proficiency ratings. Internal infrastructure, credentials, user data, and nonpublic work details do not belong in public content.
+
+## Development
+
+| Command                | Purpose                                  |
+| ---------------------- | ---------------------------------------- |
+| `npm run dev`          | Start the development server.            |
+| `npm run build`        | Generate the static export in `out/`.    |
+| `npm run start`        | Serve the generated export.              |
+| `npm run lint`         | Run ESLint.                              |
+| `npm run format:check` | Check repository formatting.             |
+| `npm run typecheck`    | Check TypeScript without emitting files. |
+| `npm run test:e2e`     | Run the Playwright browser suite.        |
+
+### Verification
 
 ```sh
 npm run lint
 npm run format:check
 npm run typecheck
 npm run build
+npm run test:e2e
+```
+
+Install Chromium with `npx playwright install chromium` if needed. On the cloud machine, use the preinstalled browser:
+
+```sh
 PLAYWRIGHT_CHROMIUM_EXECUTABLE=/usr/bin/chromium npm run test:e2e
 ```
 
-Chromium is preinstalled in the cloud machine. Elsewhere install a Playwright browser with `npx playwright install chromium` and omit the executable variable. Playwright starts the static server if necessary. To test a prefixed export, set `NEXT_PUBLIC_BASE_PATH=/my-website` for both build and tests. Tests cover 64 localized routes, locale selection, theme persistence, all responsive layouts, keyboard navigation, reduced motion, original PDF, 404s and automated WCAG AA checks.
+Playwright starts the static server when needed. For a prefixed export, set `NEXT_PUBLIC_BASE_PATH=/my-website` for both the build and browser tests. The suite covers localized routes, locale selection, theme persistence, responsive layouts, keyboard navigation, reduced motion, the original PDF, 404 responses, and automated accessibility checks.
 
-## Content scope
+### How routing and preferences fit together
 
-About, experience, education, skills, project details and Now are populated from the supplied brief in all four locales. Now records the content date explicitly (`nowUpdated` in `src/content/portfolio.ts`); it is not a live activity feed. Practical skills and academic use are distinguished without proficiency ratings.
+- [`src/app/(entry)/page.tsx`](<src/app/(entry)/page.tsx>) selects a language in the browser because static hosting has no server-side middleware.
+- [`src/app/[locale]/[[...path]]/page.tsx`](src/app/%5Blocale%5D/%5B%5B...path%5D%5D/page.tsx) resolves localized pages and generates SEO metadata.
+- [`src/components/preferences.tsx`](src/components/preferences.tsx) manages appearance and language controls. Switching languages loads the destination document so its saved appearance can be restored before paint.
+- [`scripts/serve-static.mjs`](scripts/serve-static.mjs) previews exported files with directory redirects and real 404 responses.
 
-Automatons Simulator covers finite automata; pushdown automata and Turing machines are described as experimental directions. The Router feature list was checked against its public server source (routing, packet forwarding, ARP, DHCP and RIPv2); this is source inspection, not a functional validation of that application.
+## Deployment
 
-Unfilled case-study sections, uncertain roles/statuses and deferred links are omitted. Screenshots, further confirmed project details and any future publicly approved team case studies can be added later. Internal infrastructure, addresses, credentials, user data and nonpublic partner/project details are not published. The original supplied PDF remains unchanged.
+The repository includes a [GitHub Actions workflow](.github/workflows/pages.yml) for GitHub Pages.
 
-## Images and personal photos
+1. Push the project to `main` in `Gh0st3r0k/my-website`.
+2. In **Settings → Pages → Build and deployment**, select **GitHub Actions** as the source before running the workflow.
+3. Open **Actions → Deploy portfolio to GitHub Pages** and run it, or push to `main` to trigger it automatically.
+4. Approve the `github-pages` environment if repository protection rules require it.
 
-All public images live under `public/images/`:
+Configured destination: **https://gh0st3r0k.github.io/my-website/**. Deployment availability depends on the workflow completing successfully.
 
-- `general/`: ordinary site images and illustrations.
-- `projects/<project-slug>/`: project screenshots, registered in the corresponding project record.
-- `personal/`: your portraits and other personal photos intended for visitors.
-
-For example, put a portrait at `public/images/personal/portrait.webp`. Register it in `src/content/photos.ts` with its public path `/images/personal/portrait.webp`, actual pixel width/height and alt text in en/sk/ru/uk. Captions are optional. Array order determines display order: the first photo is the main portrait, followed by a static, responsive grid on About. Photos retain their full aspect ratio and open at full size on click. No carousel or automatic rotation is used. Empty lists render no section or placeholders.
-
-WebP/JPEG are suitable for photos; use readable filenames and compressed images. There is no need to change React components when adding photos: only files and the content list. Files in `public/` are public after deployment. Do not use `personal/` as private storage. The `/my-website` deployment prefix is added automatically.
-
-Example record (only add it after the file exists; replace dimensions and descriptions with the actual photo):
-
-```ts
-{
-  src: '/images/personal/portrait.webp',
-  width: 1200,
-  height: 1600,
-  alt: {
-    en: 'Portrait of Kostiantyn Zaitsev',
-    sk: 'Portrét Kostiantyna Zaitseva',
-    ru: 'Портрет Kostiantyn Zaitsev',
-    uk: 'Портрет Kostiantyn Zaitsev',
-  },
-}
-```
-
-## Study and work details
-
-Each locale includes `/education/bachelor/`, `/education/master/`, `/experience/ynet/` and `/experience/pafuplex/`. Overview cards link to these pages, which include back navigation and use the same education/experience records as the overview and CV. Edit `slug`, description and section keys in `src/content/portfolio.ts`, and copy in the four dictionaries. `src/components/background-detail.tsx` renders both kinds of detail page.
-
-Only supplied information is used. General academic interests are not assigned to a specific degree unless confirmed. Missing course names, grades, credits, detailed curricula and internal work information are omitted. Further confirmed learning topics can be added as sections without rewriting page components.
-
-The illustrated header avatar is configured separately as `site.headerAvatar` in `src/config/site.ts` and stored under `public/images/general/`. It does not replace the real portrait or add fictional artwork to the personal photo gallery.
+The workflow uses `actions/configure-pages` to obtain the origin and base path, runs lint and type checks, builds the site, and uploads only `out/`. Project paths, user sites, and configured custom domains use the same URL helpers. Trailing-slash routes export as directory `index.html` files, allowing direct visits and refreshes without a Node.js server.

@@ -16,6 +16,7 @@ import { Header, Footer } from "@/components/shell";
 import { PortfolioPage, ProjectDetail } from "@/components/portfolio-pages";
 import { MotionRoot } from "@/components/preferences";
 type Props = { params: Promise<{ locale: string; path?: string[] }> };
+// Share route resolution between page rendering and metadata to keep them consistent.
 function resolve(locale: string, path: string[] = []) {
   if (!isLocale(locale)) return null;
   const t = messages(locale);
@@ -87,6 +88,7 @@ function resolve(locale: string, path: string[] = []) {
     description: descriptions[page],
   };
 }
+// Only paths enumerated at build time exist in the static export.
 export const dynamicParams = false;
 export function generateStaticParams() {
   return locales.flatMap((locale) =>

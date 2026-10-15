@@ -1,4 +1,6 @@
 import { locales, basePath, site, siteUrl } from "@/config/site";
+// Static hosting cannot negotiate language on the server. Redirect before rendering
+// the localized app, preserving query parameters and anchor targets.
 const redirect = `(function(){var allowed=['en','sk','ru','uk'],saved='';try{var match=document.cookie.match(/(?:^|; )locale=([^;]*)/);saved=match?decodeURIComponent(match[1]):''}catch(e){}var languages=navigator.languages||[navigator.language];var locale=allowed.includes(saved)?saved:languages.map(function(l){return l.toLowerCase().split('-')[0]}).find(function(l){return allowed.includes(l)})||'en';location.replace(${JSON.stringify(basePath)}+'/'+locale+'/'+location.search+location.hash)})();`;
 export const metadata = {
   title: site.name,

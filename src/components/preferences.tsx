@@ -49,6 +49,7 @@ function changeTheme(value: string) {
 }
 
 export function Preferences({ locale, t }: { locale: Locale; t: Dictionary }) {
+  // Match the server snapshot until hydration before enabling browser-only controls.
   const hydrated = useSyncExternalStore(
     subscribeReady,
     () => true,
@@ -172,6 +173,7 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
       if (event.persisted && !window.location.hash)
         window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     };
+    // Back/forward cache restores bypass the usual route layout effect.
     window.addEventListener("pageshow", onRestore);
     return () => window.removeEventListener("pageshow", onRestore);
   }, []);
@@ -193,6 +195,7 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
         }),
       { threshold: 0.06 },
     );
+    // Keep visible content readable immediately; animate only content below the fold.
     elements.forEach((element) => {
       if (element.getBoundingClientRect().top > window.innerHeight) {
         element.classList.add("reveal-pending");

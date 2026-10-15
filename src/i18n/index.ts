@@ -3,6 +3,7 @@ import sk from "./sk.json";
 import ru from "./ru.json";
 import uk from "./uk.json";
 import type { Locale } from "@/config/site";
+// English defines the required keys; every locale must provide the same messages.
 export type MessageKey = keyof typeof en;
 export type Dictionary = Record<MessageKey, string>;
 const dictionaries: Record<Locale, Dictionary> = { en, sk, ru, uk };
