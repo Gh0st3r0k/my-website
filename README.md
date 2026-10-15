@@ -123,7 +123,9 @@ Education and experience records provide both overview cards and detail pages, i
 
 Keep personal claims grounded in the supplied CV and content brief. Omit unfilled case-study sections, uncertain roles, and deferred links until confirmed. `nowUpdated` records the content date; Now is maintained manually.
 
-Automatons Simulator covers finite automata; pushdown automata and Turing machines are experimental directions. Router features were checked against its public server source, rather than functionally tested. Practical skills and academic use are described separately, without proficiency ratings. Internal infrastructure, credentials, user data, and nonpublic work details do not belong in public content.
+The catalogue includes Automatons Simulator, trinitypeer, Switch, Router, D&D Player, two SPAASM systems programming assignments, and this portfolio. [Project content sources](docs/project-sources.md) records the repository review and selection criteria.
+
+Automatons Simulator focuses on finite automata; its pushdown automaton and Turing machine editors are experimental extensions. Network project descriptions distinguish source inspection from real-hardware validation. Practical skills and academic use are described separately, without proficiency ratings. Internal infrastructure, credentials, user data, and nonpublic work details do not belong in public content.
 
 ## Development
 

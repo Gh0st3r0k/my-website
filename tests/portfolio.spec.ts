@@ -37,6 +37,9 @@ const paths = [
   "projects/switch",
   "projects/router",
   "projects/dnd-player",
+  "projects/ascii-analyzer",
+  "projects/socket-shell",
+  "projects/portfolio",
   "education/bachelor",
   "education/master",
   "experience/ynet",
@@ -104,6 +107,7 @@ test("themes persist without flash and system follows OS", async ({ page }) => {
 test("responsive layouts have no overflow on every page and locale", async ({
   page,
 }) => {
+  test.setTimeout(120_000);
   for (const width of [320, 390, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     for (const locale of locales) {
@@ -114,6 +118,9 @@ test("responsive layouts have no overflow on every page and locale", async ({
         "about",
         "contact",
         "projects/automata-simulator",
+        "projects/ascii-analyzer",
+        "projects/socket-shell",
+        "projects/portfolio",
         "education/bachelor",
         "education/master",
         "experience/ynet",

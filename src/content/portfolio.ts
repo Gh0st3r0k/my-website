@@ -5,7 +5,14 @@ export type Project = {
   description: MessageKey;
   category: MessageKey;
   technologies: string[];
-  visual: "automata" | "audio" | "switch" | "router" | "character";
+  visual:
+    | "automata"
+    | "audio"
+    | "switch"
+    | "router"
+    | "character"
+    | "terminal"
+    | "web";
   featured: boolean;
   featuredCompanion?: string;
   featuredDescription?: MessageKey;
@@ -34,9 +41,11 @@ export const projects: Project[] = [
       { title: "features", body: "automataFeatures" },
       { title: "architectureDetail", body: "automataArchitecture" },
       { title: "learned", body: "automataLearned" },
+      { title: "limitations", body: "automataLimits" },
     ],
     links: [
       { label: "demo", href: "https://gh0st3r0k.github.io/Simulator-FA/#/" },
+      { label: "source", href: "https://github.com/Gh0st3r0k/Simulator-FA" },
     ],
     visual: "automata",
     featured: true,
@@ -46,11 +55,21 @@ export const projects: Project[] = [
     name: "trinitypeer",
     description: "trinityDesc",
     category: "audio",
-    technologies: ["Rust", "Svelte"],
-    kind: "personalProject",
-    sections: [{ title: "features", body: "trinityFeatures" }],
+    technologies: ["Rust", "Svelte", "Tauri"],
+    kind: "academic",
+    sections: [
+      { title: "features", body: "trinityFeatures" },
+      { title: "architectureDetail", body: "trinityArchitecture" },
+    ],
     links: [
-      { label: "source", href: "https://github.com/linearrain/trinitypeer" },
+      {
+        label: "serverSource",
+        href: "https://github.com/linearrain/trinitypeer",
+      },
+      {
+        label: "clientSource",
+        href: "https://github.com/linearrain/trinitypeer-clientside",
+      },
     ],
     visual: "audio",
     featured: true,
@@ -60,7 +79,13 @@ export const projects: Project[] = [
     name: "Switch",
     description: "switchDesc",
     category: "network",
-    technologies: ["C#", "ASP.NET Core", "Electron"],
+    technologies: [
+      "C#",
+      "ASP.NET Core",
+      "Electron",
+      "SharpPcap",
+      "PacketDotNet",
+    ],
     links: [
       {
         label: "serverSource",
@@ -71,11 +96,12 @@ export const projects: Project[] = [
         href: "https://github.com/Gh0st3r0k/Switch-CLIENT",
       },
     ],
-    kind: "practicalProject",
+    kind: "academic",
     role: "projectDeveloper",
     sections: [
       { title: "features", body: "switchFeatures" },
       { title: "architectureDetail", body: "switchArchitecture" },
+      { title: "limitations", body: "switchLimits" },
     ],
     featuredCompanion: "router",
     featuredDescription: "networkPairDesc",
@@ -87,12 +113,19 @@ export const projects: Project[] = [
     name: "Router",
     description: "routerDesc",
     category: "network",
-    technologies: ["C#", "ASP.NET Core", "Electron"],
+    technologies: [
+      "C#",
+      "ASP.NET Core",
+      "Electron",
+      "SharpPcap",
+      "PacketDotNet",
+    ],
     kind: "practicalProject",
     role: "projectDeveloper",
     sections: [
       { title: "features", body: "routerFeatures" },
       { title: "architectureDetail", body: "routerArchitecture" },
+      { title: "limitations", body: "routerLimits" },
     ],
     links: [
       {
@@ -112,13 +145,79 @@ export const projects: Project[] = [
     name: "D&D Player",
     description: "dndDesc",
     category: "personalProject",
-    technologies: ["JavaScript", "Node.js", "JSON"],
+    technologies: ["JavaScript", "Node.js", "Express", "JSON"],
     kind: "personalProject",
+    sections: [
+      { title: "features", body: "dndFeatures" },
+      { title: "architectureDetail", body: "dndArchitecture" },
+    ],
     visual: "character",
     featured: false,
     links: [
       { label: "source", href: "https://github.com/Gh0st3r0k/D-D-player" },
     ],
+  },
+  {
+    slug: "ascii-analyzer",
+    name: "SPAASM · ASCII Analyzer",
+    description: "asciiDesc",
+    category: "systemsProgramming",
+    technologies: ["x86-64 Assembly", "NASM", "Linux", "ELF64"],
+    kind: "academic",
+    role: "projectAuthor",
+    sections: [
+      { title: "features", body: "asciiFeatures" },
+      { title: "architectureDetail", body: "asciiArchitecture" },
+      { title: "limitations", body: "asciiLimits" },
+    ],
+    links: [
+      {
+        label: "source",
+        href: "https://github.com/Gh0st3r0k/FIIT-STU-SPAASM-Zadanie1",
+      },
+    ],
+    visual: "terminal",
+    featured: false,
+  },
+  {
+    slug: "socket-shell",
+    name: "SPAASM · Socket Shell",
+    description: "socketDesc",
+    category: "systemsProgramming",
+    technologies: ["C", "POSIX", "TCP sockets", "Linux", "Make"],
+    kind: "academic",
+    role: "projectAuthor",
+    sections: [
+      { title: "features", body: "socketFeatures" },
+      { title: "architectureDetail", body: "socketArchitecture" },
+      { title: "limitations", body: "socketLimits" },
+    ],
+    links: [
+      {
+        label: "source",
+        href: "https://github.com/Gh0st3r0k/FIIt-STU-SPAASM-Zadanie2",
+      },
+    ],
+    visual: "terminal",
+    featured: false,
+  },
+  {
+    slug: "portfolio",
+    name: "Kostiantyn Zaitsev · Portfolio",
+    description: "portfolioDesc",
+    category: "webDevelopment",
+    technologies: ["Next.js", "React", "TypeScript", "CSS", "Playwright"],
+    kind: "personalProject",
+    sections: [
+      { title: "features", body: "portfolioFeatures" },
+      { title: "architectureDetail", body: "portfolioArchitecture" },
+    ],
+    links: [
+      { label: "source", href: "https://github.com/Gh0st3r0k/my-website" },
+      { label: "demo", href: "https://gh0st3r0k.github.io/my-website/" },
+    ],
+    visual: "web",
+    featured: false,
   },
 ];
 export type BackgroundSection = { title: MessageKey; body: MessageKey };

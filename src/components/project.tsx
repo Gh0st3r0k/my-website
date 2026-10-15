@@ -49,6 +49,27 @@ export function ProjectVisual({
             <circle cx="210" cy="75" r="22" />
             <path d="M170 125Q210 90 250 125M155 150H265M155 170H235" />
           </>
+        ) : kind === "terminal" ? (
+          <>
+            <rect x="65" y="35" width="290" height="150" rx="10" />
+            <path d="M65 65H355M85 50H90M100 50H105M115 50H120" />
+            <path className="node-active" d="m90 95 15 15-15 15M120 125H155" />
+            <path d="M90 150H225M240 150H285M180 110H310" />
+          </>
+        ) : kind === "web" ? (
+          <>
+            <rect x="55" y="30" width="310" height="160" rx="10" />
+            <path d="M55 60H365M75 45H80M90 45H95M105 45H110" />
+            <rect
+              className="node-active"
+              x="80"
+              y="85"
+              width="80"
+              height="80"
+              rx="6"
+            />
+            <path d="M185 90H335M185 110H295M185 145H245M260 145H325" />
+          </>
         ) : companion === "switch" || companion === "router" ? (
           <>
             <g transform="translate(-5 40) scale(.62)">
